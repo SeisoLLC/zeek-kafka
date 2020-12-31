@@ -30,7 +30,7 @@ COPY .screenrc /root
 
 # install powertools for libpcap-devel
 RUN dnf install -y 'dnf-command(config-manager)' && \
-    dnf config-manager --set-enabled PowerTools
+    dnf config-manager --set-enabled powertools
 
 # install prereqs then clean dnf cache
 RUN dnf -y update && \
