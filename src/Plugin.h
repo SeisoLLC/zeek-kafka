@@ -21,7 +21,7 @@
 #include "KafkaWriter.h"
 #include <plugin/Plugin.h>
 
-namespace plugin { namespace Zeek_Kafka {
+namespace plugin { namespace Seiso_Kafka {
 
     class Plugin : public ::plugin::Plugin {
     protected:
