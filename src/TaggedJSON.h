@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-#ifndef ZEEK_PLUGIN_BRO_KAFKA_TAGGEDJSON_H
-#define ZEEK_PLUGIN_BRO_KAFKA_TAGGEDJSON_H
+#ifndef ZEEK_PLUGIN_KAFKA_TAGGEDJSON_H
+#define ZEEK_PLUGIN_KAFKA_TAGGEDJSON_H
 
 #include <Desc.h>
 #include <map>

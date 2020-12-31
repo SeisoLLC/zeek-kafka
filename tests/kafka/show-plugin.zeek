@@ -15,5 +15,5 @@
 #  limitations under the License.
 #
 
-# @TEST-EXEC: zeek -NN Apache::Kafka | sed 's/, version.*)/)/' > output
+# @TEST-EXEC: zeek -NN Seiso::Kafka | sed 's/, version.*)/)/' > output
 # @TEST-EXEC: btest-diff output

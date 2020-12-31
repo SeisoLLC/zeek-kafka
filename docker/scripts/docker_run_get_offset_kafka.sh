@@ -30,13 +30,13 @@ set -o pipefail
 function help {
   echo " "
   echo "usage: ${0}"
-  echo "    --network-name                  [OPTIONAL] The Docker network name. Default: metron-bro-plugin-kafka_default"
+  echo "    --network-name                  [OPTIONAL] The Docker network name. Default: zeek-kafka_default"
   echo "    --kafka-topic                   [OPTIONAL] The kafka topic to pull the offset from. Default: zeek"
   echo "    -h/--help                       Usage information."
   echo " "
 }
 
-NETWORK_NAME=metron-bro-plugin-kafka_default
+NETWORK_NAME=zeek-kafka_default
 KAFKA_TOPIC=zeek
 
 # handle command line options
@@ -80,6 +80,6 @@ for i in "$@"; do
   esac
 done
 
-docker run --rm --network "${NETWORK_NAME}" metron-bro-plugin-kafka_kafka \
+docker run --rm --network "${NETWORK_NAME}" zeek-kafka_kafka \
   kafka-run-class.sh kafka.tools.GetOffsetShell --topic "${KAFKA_TOPIC}" --broker-list "kafka-1:9092,kafka-2:9092"
 

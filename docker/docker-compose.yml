@@ -2,10 +2,10 @@ version: '2.4'
 services:
   zookeeper:
     build: containers/zookeeper
-    image: metron-bro-plugin-kafka_zookeeper:latest
+    image: zeek-kafka_zookeeper:latest
   kafka-1:
     build: containers/kafka
-    image: metron-bro-plugin-kafka_kafka:latest
+    image: zeek-kafka_kafka:latest
     depends_on:
       zookeeper:
         condition: service_healthy
@@ -16,7 +16,7 @@ services:
       - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka-1:9092
   kafka-2:
     build: containers/kafka
-    image: metron-bro-plugin-kafka_kafka:latest
+    image: zeek-kafka_kafka:latest
     depends_on:
       zookeeper:
         condition: service_healthy
@@ -31,7 +31,7 @@ services:
       args:
         ZEEK_VERSION: "3.2.1"
         LIBRDKAFKA_VERSION: "1.4.2"
-    image: metron-bro-plugin-kafka_zeek:latest
+    image: zeek-kafka_zeek:latest
     depends_on:
       zookeeper:
         condition: service_healthy

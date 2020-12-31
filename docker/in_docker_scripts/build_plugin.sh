@@ -111,7 +111,7 @@ rc=$?; if [[ ${rc} != 0 ]]; then
   exit ${rc}
 fi
 
-zeek -NN Apache::Kafka
+zeek -NN Seiso::Kafka
 
 echo "==================================================="
 echo ""

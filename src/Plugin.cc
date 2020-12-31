@@ -17,18 +17,18 @@
 
 #include "Plugin.h"
 
-namespace plugin { namespace Apache_Kafka {
+namespace plugin { namespace Seiso_Kafka {
     Plugin plugin;
 }}
 
-using namespace plugin::Apache_Kafka;
+using namespace plugin::Seiso_Kafka;
 
 plugin::Configuration Plugin::Configure()
 {
     AddComponent(new ::logging::Component("KafkaWriter", ::logging::writer::KafkaWriter::Instantiate));
 
     plugin::Configuration config;
-    config.name = "Apache::Kafka";
+    config.name = "Seiso::Kafka";
     config.description = "Writes logs to Kafka";
     config.version.major = 0;
     config.version.minor = 3;

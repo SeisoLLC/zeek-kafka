@@ -15,7 +15,7 @@
 #  limitations under the License.
 #
 
-# @TEST-EXEC: zeek -r ../../../tests/pcaps/exercise-traffic.pcap ../../../scripts/Apache/Kafka/ %INPUT | sort > output
+# @TEST-EXEC: zeek -r ../../../tests/pcaps/exercise-traffic.pcap ../../../scripts/Seiso/Kafka/ %INPUT | sort > output
 # @TEST-EXEC: btest-diff output
 
 module Kafka;

@@ -23,7 +23,7 @@ find_package(OpenSSL)
 
 if (LIBRDKAFKA_FOUND AND OPENSSL_FOUND)
   include_directories(BEFORE ${LibRDKafka_INCLUDE_DIR} ${OpenSSL_INCLUDE_DIR})
-  zeek_plugin_begin(APACHE KAFKA)
+  zeek_plugin_begin(SEISO KAFKA)
   zeek_plugin_cc(src/KafkaWriter.cc)
   zeek_plugin_cc(src/Plugin.cc)
   zeek_plugin_cc(src/TaggedJSON.cc)

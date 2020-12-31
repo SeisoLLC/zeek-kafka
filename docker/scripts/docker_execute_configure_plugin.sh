@@ -30,14 +30,14 @@ set -o pipefail
 function help {
   echo " "
   echo "usage: ${0}"
-  echo "    --container-name                [OPTIONAL] The Docker container name. Default: metron-bro-plugin-kafka_zeek_1"
+  echo "    --container-name                [OPTIONAL] The Docker container name. Default: zeek-kafka_zeek_1"
   echo "    --kafka-topic                   [OPTIONAL] The kafka topic to create. Default: zeek"
   echo "    -h/--help                       Usage information."
   echo " "
   echo " "
 }
 
-CONTAINER_NAME=metron-bro-plugin-kafka_zeek_1
+CONTAINER_NAME=zeek-kafka_zeek_1
 KAFKA_TOPIC=zeek
 
 # Handle command line options

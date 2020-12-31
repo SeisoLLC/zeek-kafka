@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-#ifndef ZEEK_PLUGIN_BRO_KAFKA
-#define ZEEK_PLUGIN_BRO_KAFKA
+#ifndef ZEEK_PLUGIN_KAFKA
+#define ZEEK_PLUGIN_KAFKA
 
 #include "KafkaWriter.h"
 #include <plugin/Plugin.h>
 
-namespace plugin { namespace Apache_Kafka {
+namespace plugin { namespace Zeek_Kafka {
 
     class Plugin : public ::plugin::Plugin {
     protected:
