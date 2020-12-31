@@ -1,6 +1,6 @@
 *Thank you for submitting a contribution to the zeek-kafka writer plugin.
 
-In order to streamline the review process, we ask you follow [these guidelines](CONTRIBUTING.md) and complete the following template.*
+In order to streamline the review process, we ask you follow [these guidelines](https://github.com/SeisoLLC/zeek-kafka/blob/master/.github/CONTRIBUTING.md) and complete the following template.*
 
 # Summary of the contribution
 ...
@@ -13,6 +13,6 @@ In order to streamline the review process, we ask you follow [these guidelines](
 - [ ] Rebase your PR against the latest commit within the target branch
 - [ ] Include steps to verify and test the intended change
 - [ ] Write or update unit tests and/or integration tests to verify your changes
-- [ ] Verify the basic functionality of the plugin by building and running locally via the [end to end testing script](docker/run_end_to_end.sh)
+- [ ] Verify the basic functionality of the plugin by building and running locally via the [end to end testing script](https://github.com/SeisoLLC/zeek-kafka/blob/master/docker/run_end_to_end.sh)
 - [ ] Indicate whether or not this is a breaking change
 - [ ] Ensure that any new dependencies are these dependencies licensed in a way that is compatible for inclusion under [ASF 2.0](http://www.apache.org/legal/resolved.html#category-a)
