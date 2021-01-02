@@ -31,13 +31,13 @@ A Zeek log writer that sends logging output to Kafka, providing a convenient mea
 1. Install the plugin using `zkg install`.
 
     ```
-    $ zkg install seiso/zeek-kafka --version master
+    $ zkg install seiso/zeek-kafka --version main
     The following packages will be INSTALLED:
-      zeek/seiso/zeek-kafka (master)
+      zeek/seiso/zeek-kafka (main)
 
     Verify the following REQUIRED external dependencies:
     (Ensure their installation on all relevant systems before proceeding):
-      from zeek/seiso/zeek-kafka (master):
+      from zeek/seiso/zeek-kafka (main):
         librdkafka ~1.4.2
 
     Proceed? [Y/n]
@@ -48,7 +48,7 @@ A Zeek log writer that sends logging output to Kafka, providing a convenient mea
 
 
     Installing "zeek/seiso/zeek-kafka"........
-    Installed "zeek/seiso/zeek-kafka" (master)
+    Installed "zeek/seiso/zeek-kafka" (main)
     Loaded "zeek/seiso/zeek-kafka"
     ```
 

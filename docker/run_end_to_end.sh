@@ -80,7 +80,7 @@ rc=$?; if [[ ${rc} != 0 ]]; then
   fi
   git commit -m 'docker run'
   rc=$?; if [[ ${rc} != 0 ]]; then
-    echo "ERROR> FAILED TO COMMIT TO GIT MASTER IN PLUGIN DIRECTORY. ${rc}"
+    echo "ERROR> FAILED TO COMMIT TO GIT IN PLUGIN DIRECTORY. ${rc}"
   exit ${rc}
   fi
   echo "git repo created"

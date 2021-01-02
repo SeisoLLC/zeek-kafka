@@ -7,7 +7,7 @@
 ## Steps to reproduce
 ...
 
-*Where applicable, consider providing a patch that uses the [end to end testing environment](https://github.com/seisollc/zeek-kafka/blob/master/docker/run_end_to_end.sh).*
+*Where applicable, consider providing a patch that uses the [end to end testing environment](https://github.com/seisollc/zeek-kafka/blob/main/docker/run_end_to_end.sh).*
 
 ## Logs, errors, etc.
 ...
