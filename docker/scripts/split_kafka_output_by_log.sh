@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2143,SC1083,SC2002,SC2126
-
+#
+#  Copyright 2020-2021 Zeek-Kafka
+#  Copyright 2015-2020 The Apache Software Foundation
 #
 #  Licensed to the Apache Software Foundation (ASF) under one or more
 #  contributor license agreements.  See the NOTICE file distributed with
