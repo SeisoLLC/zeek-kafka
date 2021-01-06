@@ -21,3 +21,14 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Run linting
         run: make lint
+  test:
+    strategy:
+      matrix:
+        platform: [ubuntu-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Run testing
+        run: make test

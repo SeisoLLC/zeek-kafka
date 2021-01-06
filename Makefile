@@ -48,7 +48,7 @@ distclean:
 
 .PHONY: test
 test:
-	make -C tests
+	@cd docker/ && ./run_end_to_end.sh && ./finish_end_to_end.sh
 
 .PHONY: lint
 lint:
