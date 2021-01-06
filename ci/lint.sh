@@ -28,12 +28,10 @@ FILES=$(find "${DIR}" \( -path "${DIR}/.git" -prune -or       \
 while IFS= read -r file; do
   # If the file still exists, and matches one of the provided extensions
   if [[ -f "${file}" ]]; then
-    if [[ -f "${file}" ]]; then
-      # Ensure that it has the required copyright statemenet
-      grep --files-without-match 'Copyright 2020-2.* Zeek-Kafka$' "${file}"
-    else
-      echo "${file} was not linted due to its file name"
-    fi
+    # Ensure that it has the required copyright statemenet
+    grep --files-without-match 'Copyright 2020-2.* Zeek-Kafka$' "${file}"
+  else
+    echo "${file} was excluded from linting"
   fi
 done <<< "${FILES}"
 
