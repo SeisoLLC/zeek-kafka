@@ -30,5 +30,17 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
+      - id: cache-docker
+        uses: actions/cache@v2
+        with:
+          path: ~/cache
+          key: ${{ runner.os }}-cache
       - name: Run e2e tests
-        run: make e2e
+        run: |
+          docker load --input ~/cache/docker.tar && \
+          make e2e
+      - name: Update docker cache
+        run: |
+             mkdir -p ~/cache && \
+             images=($(ls -1 docker/containers | awk '{print "zeek-kafka_" $0}')) && \
+             docker save ${images[*]} -o ~/cache/docker.tar || true
