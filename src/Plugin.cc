@@ -1,10 +1,10 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
+ * Copyright 2020-2021 Zeek-Kafka
+ * Copyright 2015-2020 The Apache Software Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -17,18 +17,18 @@
 
 #include "Plugin.h"
 
-namespace plugin { namespace Apache_Kafka {
+namespace plugin { namespace Seiso_Kafka {
     Plugin plugin;
 }}
 
-using namespace plugin::Apache_Kafka;
+using namespace plugin::Seiso_Kafka;
 
 plugin::Configuration Plugin::Configure()
 {
     AddComponent(new ::logging::Component("KafkaWriter", ::logging::writer::KafkaWriter::Instantiate));
 
     plugin::Configuration config;
-    config.name = "Apache::Kafka";
+    config.name = "Seiso::Kafka";
     config.description = "Writes logs to Kafka";
     config.version.major = 0;
     config.version.minor = 3;

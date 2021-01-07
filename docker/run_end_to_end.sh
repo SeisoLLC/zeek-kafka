@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
-
 #
-#  Licensed to the Apache Software Foundation (ASF) under one or more
-#  contributor license agreements.  See the NOTICE file distributed with
-#  this work for additional information regarding copyright ownership.
-#  The ASF licenses this file to You under the Apache License, Version 2.0
-#  (the "License"); you may not use this file except in compliance with
-#  the License.  You may obtain a copy of the License at
+#  Copyright 2020-2021 Zeek-Kafka
+#  Copyright 2015-2020 The Apache Software Foundation
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
 #
 #      http://www.apache.org/licenses/LICENSE-2.0
 #
@@ -56,7 +55,7 @@ LOG_DATE=${DATE// /_}
 TEST_OUTPUT_PATH="${ROOT_DIR}/test_output/"${LOG_DATE//:/_}
 KAFKA_TOPIC="zeek"
 PARTITIONS=2
-PROJECT_NAME="metron-bro-plugin-kafka"
+PROJECT_NAME="zeek-kafka"
 OUR_SCRIPTS_PATH="${PLUGIN_ROOT_DIR}/docker/in_docker_scripts"
 
 cd "${PLUGIN_ROOT_DIR}" || { echo "NO PLUGIN ROOT" ; exit 1; }
@@ -78,7 +77,7 @@ rc=$?; if [[ ${rc} != 0 ]]; then
   fi
   git commit -m 'docker run'
   rc=$?; if [[ ${rc} != 0 ]]; then
-    echo "ERROR> FAILED TO COMMIT TO GIT MASTER IN PLUGIN DIRECTORY. ${rc}"
+    echo "ERROR> FAILED TO COMMIT TO GIT IN PLUGIN DIRECTORY. ${rc}"
   exit ${rc}
   fi
   echo "git repo created"

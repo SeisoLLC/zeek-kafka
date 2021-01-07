@@ -1,7 +1,7 @@
 [package]
-description = A Zeek log writer plugin that sends logging output to Kafka.
+description = A Zeek log writer plugin that publishes to Kafka.
 tags = log writer, zeek plugin, kafka
-script_dir = build/scripts/Apache/Kafka
+script_dir = build/scripts/Seiso/Kafka
 build_command = ./configure --with-librdkafka=%(LIBRDKAFKA_ROOT)s && make
 test_command = ( cd tests && btest -d )
 plugin_dir = build

@@ -1,10 +1,10 @@
 #
-#  Licensed to the Apache Software Foundation (ASF) under one or more
-#  contributor license agreements.  See the NOTICE file distributed with
-#  this work for additional information regarding copyright ownership.
-#  The ASF licenses this file to You under the Apache License, Version 2.0
-#  (the "License"); you may not use this file except in compliance with
-#  the License.  You may obtain a copy of the License at
+#  Copyright 2020-2021 Zeek-Kafka
+#  Copyright 2015-2020 The Apache Software Foundation
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
 #
 #      http://www.apache.org/licenses/LICENSE-2.0
 #
@@ -17,28 +17,39 @@
 # Convenience Makefile providing a few common top-level targets.
 #
 
-cmake_build_dir=build
-arch=`uname -s | tr A-Z a-z`-`uname -m`
+SHELL           := bash
+CMAKE_BUILD_DIR  = build
+ARCH             = `uname -s | tr A-Z a-z`-`uname -m`
 
+.PHONY: all
 all: build-it
 
+.PHONY: build-it
 build-it:
-	@test -e $(cmake_build_dir)/config.status || ./configure
-	-@test -e $(cmake_build_dir)/CMakeCache.txt && \
-      test $(cmake_build_dir)/CMakeCache.txt -ot `cat $(cmake_build_dir)/CMakeCache.txt | grep ZEEK_DIST | cut -d '=' -f 2`/build/CMakeCache.txt && \
+	@test -e $(CMAKE_BUILD_DIR)/config.status || ./configure
+	-@test -e $(CMAKE_BUILD_DIR)/CMakeCache.txt && \
+      test $(CMAKE_BUILD_DIR)/CMakeCache.txt -ot `cat $(CMAKE_BUILD_DIR)/CMakeCache.txt | grep ZEEK_DIST | cut -d '=' -f 2`/build/CMakeCache.txt && \
       echo Updating stale CMake cache && \
-      touch $(cmake_build_dir)/CMakeCache.txt
+      touch $(CMAKE_BUILD_DIR)/CMakeCache.txt
 
-	( cd $(cmake_build_dir) && make )
+	( cd $(CMAKE_BUILD_DIR) && make )
 
+.PHONY: install
 install:
-	( cd $(cmake_build_dir) && make install )
+	( cd $(CMAKE_BUILD_DIR) && make install )
 
+.PHONY: clean
 clean:
-	( cd $(cmake_build_dir) && make clean )
+	( cd $(CMAKE_BUILD_DIR) && make clean )
 
+.PHONY: distclean
 distclean:
-	rm -rf $(cmake_build_dir)
+	rm -rf $(CMAKE_BUILD_DIR)
 
+.PHONY: test
 test:
 	make -C tests
+
+.PHONY: lint
+lint:
+	@ci/lint.sh

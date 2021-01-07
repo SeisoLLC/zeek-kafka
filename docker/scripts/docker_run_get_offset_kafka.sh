@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
-
 #
-#  Licensed to the Apache Software Foundation (ASF) under one or more
-#  contributor license agreements.  See the NOTICE file distributed with
-#  this work for additional information regarding copyright ownership.
-#  The ASF licenses this file to You under the Apache License, Version 2.0
-#  (the "License"); you may not use this file except in compliance with
-#  the License.  You may obtain a copy of the License at
+#  Copyright 2020-2021 Zeek-Kafka
+#  Copyright 2015-2020 The Apache Software Foundation
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
 #
 #      http://www.apache.org/licenses/LICENSE-2.0
 #
@@ -30,13 +29,13 @@ set -o pipefail
 function help {
   echo " "
   echo "usage: ${0}"
-  echo "    --network-name                  [OPTIONAL] The Docker network name. Default: metron-bro-plugin-kafka_default"
+  echo "    --network-name                  [OPTIONAL] The Docker network name. Default: zeek-kafka_default"
   echo "    --kafka-topic                   [OPTIONAL] The kafka topic to pull the offset from. Default: zeek"
   echo "    -h/--help                       Usage information."
   echo " "
 }
 
-NETWORK_NAME=metron-bro-plugin-kafka_default
+NETWORK_NAME=zeek-kafka_default
 KAFKA_TOPIC=zeek
 
 # handle command line options
@@ -80,6 +79,6 @@ for i in "$@"; do
   esac
 done
 
-docker run --rm --network "${NETWORK_NAME}" metron-bro-plugin-kafka_kafka \
+docker run --rm --network "${NETWORK_NAME}" zeek-kafka_kafka \
   kafka-run-class.sh kafka.tools.GetOffsetShell --topic "${KAFKA_TOPIC}" --broker-list "kafka-1:9092,kafka-2:9092"
 

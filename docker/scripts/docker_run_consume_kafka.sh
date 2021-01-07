@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
-
 #
-#  Licensed to the Apache Software Foundation (ASF) under one or more
-#  contributor license agreements.  See the NOTICE file distributed with
-#  this work for additional information regarding copyright ownership.
-#  The ASF licenses this file to You under the Apache License, Version 2.0
-#  (the "License"); you may not use this file except in compliance with
-#  the License.  You may obtain a copy of the License at
+#  Copyright 2020-2021 Zeek-Kafka
+#  Copyright 2015-2020 The Apache Software Foundation
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
 #
 #      http://www.apache.org/licenses/LICENSE-2.0
 #
@@ -32,7 +31,7 @@ set -o pipefail
 function help {
   echo " "
   echo "usage: ${0}"
-  echo "    --network-name                  [OPTIONAL] The Docker network name. Default: metron-bro-plugin-kafka_default"
+  echo "    --network-name                  [OPTIONAL] The Docker network name. Default: zeek-kafka_default"
   echo "    --offset                        [OPTIONAL] The kafka offset to read from. Default: 0"
   echo "    --partition                     [OPTIONAL] The kafka partition to read from. Default: 0"
   echo "    --kafka-topic                   [OPTIONAL] The kafka topic to consume from. Default: zeek"
@@ -40,7 +39,7 @@ function help {
   echo " "
 }
 
-NETWORK_NAME=metron-bro-plugin-kafka_default
+NETWORK_NAME=zeek-kafka_default
 OFFSET=0
 PARTITION=0
 KAFKA_TOPIC=zeek
@@ -103,6 +102,6 @@ for i in "$@"; do
   esac
 done
 
-docker run --rm --network "${NETWORK_NAME}" metron-bro-plugin-kafka_kafka \
+docker run --rm --network "${NETWORK_NAME}" zeek-kafka_kafka \
   kafka-console-consumer.sh --topic "${KAFKA_TOPIC}" --offset "${OFFSET}" --partition "${PARTITION}" --bootstrap-server kafka-1:9092 --timeout-ms 5000
 

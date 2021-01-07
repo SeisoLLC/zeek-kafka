@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
-
 #
-#  Licensed to the Apache Software Foundation (ASF) under one or more
-#  contributor license agreements.  See the NOTICE file distributed with
-#  this work for additional information regarding copyright ownership.
-#  The ASF licenses this file to You under the Apache License, Version 2.0
-#  (the "License"); you may not use this file except in compliance with
-#  the License.  You may obtain a copy of the License at
+#  Copyright 2020-2021 Zeek-Kafka
+#  Copyright 2015-2020 The Apache Software Foundation
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
 #
 #      http://www.apache.org/licenses/LICENSE-2.0
 #
@@ -30,7 +29,7 @@ set -o pipefail
 function help {
   echo " "
   echo "usage: ${0}"
-  echo "    --container-name                [OPTIONAL] The Docker container name. Default: metron-bro-plugin-kafka_zeek_1"
+  echo "    --container-name                [OPTIONAL] The Docker container name. Default: zeek-kafka_zeek_1"
   echo "    --pcap-file-name                [REQUIRED] The name of the pcap file"
   echo "    --output-directory-name         [REQUIRED] The name of the output directory"
   echo "    -h/--help                       Usage information."
@@ -38,7 +37,7 @@ function help {
   echo " "
 }
 
-CONTAINER_NAME=metron-bro-plugin-kafka_zeek_1
+CONTAINER_NAME=zeek-kafka_zeek_1
 PCAP_FILE_NAME=
 OUTPUT_DIRECTORY_NAME=
 

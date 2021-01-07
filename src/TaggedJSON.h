@@ -1,10 +1,10 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
+ * Copyright 2020-2021 Zeek-Kafka
+ * Copyright 2015-2020 The Apache Software Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-#ifndef ZEEK_PLUGIN_BRO_KAFKA_TAGGEDJSON_H
-#define ZEEK_PLUGIN_BRO_KAFKA_TAGGEDJSON_H
+#ifndef ZEEK_PLUGIN_KAFKA_TAGGEDJSON_H
+#define ZEEK_PLUGIN_KAFKA_TAGGEDJSON_H
 
 #include <Desc.h>
 #include <map>

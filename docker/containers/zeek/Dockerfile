@@ -1,10 +1,10 @@
 #
-#  Licensed to the Apache Software Foundation (ASF) under one or more
-#  contributor license agreements.  See the NOTICE file distributed with
-#  this work for additional information regarding copyright ownership.
-#  The ASF licenses this file to You under the Apache License, Version 2.0
-#  (the "License"); you may not use this file except in compliance with
-#  the License.  You may obtain a copy of the License at
+#  Copyright 2020-2021 Zeek-Package
+#  Copyright 2015-2020 The Apache Software Foundation
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
 #
 #      http://www.apache.org/licenses/LICENSE-2.0
 #
@@ -30,7 +30,7 @@ COPY .screenrc /root
 
 # install powertools for libpcap-devel
 RUN dnf install -y 'dnf-command(config-manager)' && \
-    dnf config-manager --set-enabled PowerTools
+    dnf config-manager --set-enabled powertools
 
 # install prereqs then clean dnf cache
 RUN dnf -y update && \

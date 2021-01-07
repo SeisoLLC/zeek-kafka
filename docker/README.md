@@ -1,10 +1,10 @@
 <!--
-  Licensed to the Apache Software Foundation (ASF) under one or more
-  contributor license agreements.  See the NOTICE file distributed with
-  this work for additional information regarding copyright ownership.
-  The ASF licenses this file to You under the Apache License, Version 2.0
-  (the "License"); you may not use this file except in compliance with
-  the License.  You may obtain a copy of the License at
+  Copyright 2020-2021 Zeek-Kafka
+  Copyright 2015-2020 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
       http://www.apache.org/licenses/LICENSE-2.0
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,9 +13,9 @@
   limitations under the License.
 -->
 
-## Docker support for testing metron-bro-plugin-kafka
+## Docker support for testing zeek-kafka
 
-These scripts and containers provide support for building and testing Zeek and the metron-bro-plugin-kafka using a number of Docker containers.
+These scripts and containers provide support for building and testing Zeek and the zeek-kafka package using a number of Docker containers.
 The use of these scripts and containers allow an easier, automated workflow for testing new features, fixes, or regressions than before.
 One of the goals is for this to be extensible, such that new scripts can be introduced and run as well.  This will allow, for example, one or more
 testing scripts to be added to a pull request, and subsequently to a test suite.
@@ -84,34 +84,34 @@ testing scripts to be added to a pull request, and subsequently to a test suite.
 - `docker_execute_build_plugin.sh`: Executes `build_plugin.sh` in the zeek container
   ###### Parameters
   ```bash
-   --container-name              [OPTIONAL] The Docker container name. Default: metron-bro-plugin-kafka_zeek_1
+   --container-name              [OPTIONAL] The Docker container name. Default: zeek-kafka_zeek_1
   ```
 - `docker_execute_configure_plugin.sh`: Executes `configure_plugin.sh` in the zeek container
   ###### Parameters
   ```bash
-  --container-name               [OPTIONAL] The Docker container name. Default: metron-bro-plugin-kafka_zeek_1
+  --container-name               [OPTIONAL] The Docker container name. Default: zeek-kafka_zeek_1
   ```
 - `docker_execute_create_topic_in_kafka.sh`: Creates the specified kafka topic in the kafka container
   ###### Parameters
   ```bash
-  --container-name               [OPTIONAL] The Docker container name. Default: metron-bro-plugin-kafka_kafka-1_1
+  --container-name               [OPTIONAL] The Docker container name. Default: zeek-kafka_kafka-1_1
   --kafka-topic                  [OPTIONAL] The kafka topic to create. Default: zeek
   --partitions                   [OPTIONAL] The number of kafka partitions to create. Default: 2
   ```
 - `docker_execute_process_data_file.sh`: Executes `process_data_file.sh` in the zeek container
   ###### Parameters
    ```bash
-   --container-name              [OPTIONAL] The Docker container name. Default: metron-bro-plugin-kafka_zeek_1
+   --container-name              [OPTIONAL] The Docker container name. Default: zeek-kafka_zeek_1
    ```
 - `docker_execute_shell.sh`: `docker execute -i -t bash` to get a shell in a given container
   ###### Parameters
   ```bash
-  --container-name               [OPTIONAL] The Docker container name. Default: metron-bro-plugin-kafka_zeek_1
+  --container-name               [OPTIONAL] The Docker container name. Default: zeek-kafka_zeek_1
   ```
 - `docker_run_consume_kafka.sh`: Runs an instance of the kafka container, with the console consumer `kafka-console-consumer.sh --topic $KAFKA_TOPIC --offset $OFFSET --partition $PARTITION --bootstrap-server kafka-1:9092`
   ###### Parameters
   ```bash
-  --network-name                 [OPTIONAL] The Docker network name. Default: metron-bro-plugin-kafka_default
+  --network-name                 [OPTIONAL] The Docker network name. Default: zeek-kafka_default
   --offset                       [OPTIONAL] The kafka offset to read from. Default: 0
   --partition                    [OPTIONAL] The kafka partition to read from. Default: 0
   --kafka-topic                  [OPTIONAL] The kafka topic to consume from. Default: zeek
@@ -119,7 +119,7 @@ testing scripts to be added to a pull request, and subsequently to a test suite.
 - `docker_run_get_offset_kafka.sh`: Runs an instance of the kafka container and gets the current offset for the specified topic
   ###### Parameters
   ```bash
-  --network-name                 [OPTIONAL] The Docker network name. Default: metron-bro-plugin-kafka_default
+  --network-name                 [OPTIONAL] The Docker network name. Default: zeek-kafka_default
   --kafka-topic                  [OPTIONAL] The kafka topic to get the offset from. Default: zeek
   ```
 - `download_sample_pcaps.sh`: Downloads the sample pcaps to a specified directory. If they exist, it is a no-op
