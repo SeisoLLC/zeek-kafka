@@ -37,7 +37,10 @@ jobs:
           key: ${{ runner.os }}-cache
       - name: Run e2e tests
         run: |
-          docker load --input ~/cache/docker.tar && \
+          if [[ -f ~/cache/docker.tar ]]; then
+            echo "Loading ~/cache/docker.tar..."
+            docker load --input ~/cache/docker.tar
+          fi && \
           make e2e
       - name: Update docker cache
         run: |
