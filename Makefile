@@ -48,7 +48,7 @@ distclean:
 
 .PHONY: test
 test:
-	@make -C tests
+	make -C tests
 
 .PHONY: e2e
 e2e:
