@@ -90,7 +90,7 @@ if [[ ! -f "${DATA_PATH}"/example-traffic/exercise-traffic.pcap ]]; then
 fi
 
 if [[ ! -f "${DATA_PATH}"/nitroba/nitroba.pcap ]]; then
-  wget http://downloads.digitalcorpora.org/corpora/network-packet-dumps/2008-nitroba/nitroba.pcap -O "${DATA_PATH}"/nitroba/nitroba.pcap
+  wget http://downloads.digitalcorpora.org/corpora/scenarios/2008-nitroba/nitroba.pcap -O "${DATA_PATH}"/nitroba/nitroba.pcap
 fi
 
 if [[ ! -f "${DATA_PATH}"/ssh/ssh.pcap ]]; then
