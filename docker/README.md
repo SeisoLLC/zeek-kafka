@@ -219,6 +219,7 @@ Other scripts may then be used to do your testing, for example running:
 --skip-docker-build             [OPTIONAL] Skip build of zeek docker machine.
 --no-pcaps                      [OPTIONAL] Do not run pcaps.
 --data-path                     [OPTIONAL] The pcap data path. Default: ./data
+--test-output                   [OPTIONAL] The test output path. Default: ./test_output/DATETIME
 --kafka-topic                   [OPTIONAL] The kafka topic name to use. Default: zeek
 --partitions                    [OPTIONAL] The number of kafka partitions to create. Default: 2
 --plugin-version                [OPTIONAL] The plugin version. Default: the current branch name

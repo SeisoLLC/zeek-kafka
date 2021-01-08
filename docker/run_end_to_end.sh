@@ -26,6 +26,7 @@ function help {
   echo "USAGE"
   echo "    --skip-docker-build             [OPTIONAL] Skip build of zeek docker machine."
   echo "    --data-path                     [OPTIONAL] The pcap data path. Default: ./data"
+  echo "    --test-output                   [OPTIONAL] The test output path. Default: ./test_output/DATETIME"
   echo "    --kafka-topic                   [OPTIONAL] The kafka topic to consume from. Default: zeek"
   echo "    --partitions                    [OPTIONAL] The number of kafka partitions to create. Default: 2"
   echo "    --plugin-version                [OPTIONAL] The plugin version. Default: the current branch name"
@@ -113,8 +114,19 @@ for i in "$@"; do
   #
   # DATA_PATH
   #
+  #   --data-path
+  #
     --data-path=*)
       DATA_PATH="${i#*=}"
+      shift # past argument=value
+    ;;
+  #
+  # TEST_OUTPUT_PATH
+  #
+  #   --test-output
+  #
+    --test-output=*)
+      TEST_OUTPUT_PATH="${i#*=}"
       shift # past argument=value
     ;;
   #
