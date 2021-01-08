@@ -53,7 +53,7 @@ test:
 .PHONY: e2e
 e2e:
 	cd docker/ && if [[ "$${GITHUB_ACTIONS,,}" == "true" ]]; then \
-	  ./run_end_to_end.sh --data-path="$${RUNNER_TEMP}" && ./finish_end_to_end.sh ; \
+	  ./run_end_to_end.sh --data-path="$${RUNNER_TEMP}" --test-output="$${RUNNER_TEMP}" && ./finish_end_to_end.sh ; \
 	else \
 	  ./run_end_to_end.sh && ./finish_end_to_end.sh ; \
 	fi
