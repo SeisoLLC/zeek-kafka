@@ -1,10 +1,18 @@
 version: '2.4'
 services:
   zookeeper:
-    build: containers/zookeeper
+    build:
+      context: containers/zookeeper
+      cache_from:
+        - zeek-kafka_zookeeper:latest
+        - zookeeper:3.4
     image: zeek-kafka_zookeeper:latest
   kafka-1:
-    build: containers/kafka
+    build:
+      context: containers/kafka
+      cache_from:
+        - zeek-kafka_kafka:latest
+        - wurstmeister/kafka:2.12-2.5.0
     image: zeek-kafka_kafka:latest
     depends_on:
       zookeeper:
@@ -15,7 +23,11 @@ services:
       - KAFKA_LISTENERS=PLAINTEXT://kafka-1:9092
       - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka-1:9092
   kafka-2:
-    build: containers/kafka
+    build:
+      context: containers/kafka
+      cache_from:
+        - zeek-kafka_kafka:latest
+        - wurstmeister/kafka:2.12-2.5.0
     image: zeek-kafka_kafka:latest
     depends_on:
       zookeeper:
@@ -28,6 +40,9 @@ services:
   zeek:
     build:
       context: containers/zeek
+      cache_from:
+        - zeek-kafka_zeek:latest
+        - centos:8
       args:
         ZEEK_VERSION: "3.2.1"
         LIBRDKAFKA_VERSION: "1.4.2"
