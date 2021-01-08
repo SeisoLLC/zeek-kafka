@@ -220,7 +220,7 @@ if [[ "$NO_PCAP" == false ]]; then
     BASE_FILE_NAME=$(basename "${file}")
     DOCKER_DIRECTORY_NAME=${BASE_FILE_NAME//\./_}
 
-    mkdir "${TEST_OUTPUT_PATH}/${DOCKER_DIRECTORY_NAME}" || exit 1
+    mkdir -p "${TEST_OUTPUT_PATH}/${DOCKER_DIRECTORY_NAME}" || exit 1
     echo "MADE ${TEST_OUTPUT_PATH}/${DOCKER_DIRECTORY_NAME}"
 
     # get the offsets in kafka for the provided topic
