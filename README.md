@@ -455,4 +455,3 @@ redef Kafka::kafka_conf = table( ["metadata.broker.list"] = "node1:6667"
 ## Contributing
 
 If you are interested in contributing to this plugin, please see our [CONTRIBUTING.md](CONTRIBUTING.md).
-
