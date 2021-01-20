@@ -13,7 +13,7 @@ jobs:
   lint:
     strategy:
       matrix:
-        platform: [ubuntu-latest]
+        platform: [Ubuntu-20.04]
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v2
@@ -24,7 +24,7 @@ jobs:
   e2e:
     strategy:
       matrix:
-        platform: [ubuntu-latest]
+        platform: [Ubuntu-20.04]
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v2
