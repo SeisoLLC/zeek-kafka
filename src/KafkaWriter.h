@@ -35,11 +35,6 @@ namespace RdKafka {
     class Topic;
 }
 
-namespace threading {
-  namespace formatter {
-    class Formatter;
-}}
-
 namespace logging { namespace writer {
 
 /**
