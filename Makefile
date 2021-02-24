@@ -60,4 +60,4 @@ e2e:
 
 .PHONY: lint
 lint:
-	ci/lint.sh
+	@ci/lint.sh
