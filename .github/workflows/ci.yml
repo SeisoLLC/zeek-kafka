@@ -20,7 +20,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Run linting
-        run: make lint
+        run: make -d lint
   e2e:
     strategy:
       matrix:
