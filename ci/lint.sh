@@ -40,6 +40,6 @@ MISSING_COPYRIGHT=$(find "${DIR}" \( -path "${DIR}/.git" -or \
 
 if [[ "${MISSING_COPYRIGHT}" ]]; then
   echo "The following files are missing the Zeek-Kafka copyright"
-  echo "* ${MISSING_COPYRIGHT}"
+  echo "${MISSING_COPYRIGHT}"
   exit 1
 fi
