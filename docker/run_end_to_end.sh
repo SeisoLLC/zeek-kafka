@@ -24,13 +24,14 @@ set -o pipefail
 function help {
   echo " "
   echo "USAGE"
-  echo "    --skip-docker-build             [OPTIONAL] Skip build of zeek docker machine."
   echo "    --data-path                     [OPTIONAL] The pcap data path. Default: ./data"
-  echo "    --test-output                   [OPTIONAL] The test output path. Default: ./test_output/DATETIME"
   echo "    --kafka-topic                   [OPTIONAL] The kafka topic to consume from. Default: zeek"
+  echo "    --no-pcap                       [OPTIONAL] Do not run pcaps."
   echo "    --partitions                    [OPTIONAL] The number of kafka partitions to create. Default: 2"
   echo "    --plugin-version                [OPTIONAL] The plugin version. Default: the current branch name"
-  echo "    --no-pcap                       [OPTIONAL] Do not run pcaps."
+  echo "    --skip-docker-build             [OPTIONAL] Skip build of zeek docker machine."
+  echo "    --test-output                   [OPTIONAL] The test output path. Default: ./test_output/DATETIME"
+  echo "    --zeek-kafka-os                 [OPTIONAL] The OS to run zeek and zeek-kafka in. Default: centos"
   echo "    -h/--help                       Usage information."
   echo " "
   echo "COMPATABILITY"
@@ -56,6 +57,7 @@ LOG_DATE=${DATE// /_}
 TEST_OUTPUT_PATH="${ROOT_DIR}/test_output/"${LOG_DATE//:/_}
 KAFKA_TOPIC="zeek"
 PARTITIONS=2
+ZEEK_KAFKA_OS="centos"
 PROJECT_NAME="zeek-kafka"
 OUR_SCRIPTS_PATH="${PLUGIN_ROOT_DIR}/docker/in_docker_scripts"
 
@@ -157,6 +159,15 @@ for i in "$@"; do
       shift # past argument=value
     ;;
   #
+  # ZEEK_KAFKA_OS
+  #
+  #   --zeek-kafka-os
+  #
+    --zeek-kafka-os=*)
+      ZEEK_KAFKA_OS="${i#*=}"
+      shift # past argument=value
+    ;;
+  #
   # -h/--help
   #
     -h | --help)
@@ -178,22 +189,34 @@ echo "DATA_PATH            = ${DATA_PATH}"
 echo "TEST_OUTPUT_PATH     = ${TEST_OUTPUT_PATH}"
 echo "PLUGIN_ROOT_DIR      = ${PLUGIN_ROOT_DIR}"
 echo "OUR_SCRIPTS_PATH     = ${OUR_SCRIPTS_PATH}"
+echo "ZEEK_KAFKA_OS        = ${ZEEK_KAFKA_OS}"
 echo "==================================================="
+
+if [[ "${ZEEK_KAFKA_OS}" == "ubuntu" ]]; then
+  ZEEK_KAFKA_OS="ubuntu:20.04"
+elif [[ "${ZEEK_KAFKA_OS}" == "centos" ]]; then
+  ZEEK_KAFKA_OS="centos:8"
+else
+  echo "OS must be ubuntu or centos"
+  exit 1
+fi
 
 # Run docker compose, rebuilding as specified
 if [[ "$SKIP_REBUILD_ZEEK" = false ]]; then
   COMPOSE_PROJECT_NAME="${PROJECT_NAME}" \
     DATA_PATH=${DATA_PATH} \
     TEST_OUTPUT_PATH=${TEST_OUTPUT_PATH} \
-    PLUGIN_ROOT_DIR=${PLUGIN_ROOT_DIR} \
     OUR_SCRIPTS_PATH=${OUR_SCRIPTS_PATH} \
+    PLUGIN_ROOT_DIR=${PLUGIN_ROOT_DIR} \
+    ZEEK_KAFKA_OS=${ZEEK_KAFKA_OS} \
     docker-compose up -d --build
 else
   COMPOSE_PROJECT_NAME="${PROJECT_NAME}" \
     DATA_PATH=${DATA_PATH} \
     TEST_OUTPUT_PATH=${TEST_OUTPUT_PATH} \
-    PLUGIN_ROOT_DIR=${PLUGIN_ROOT_DIR} \
     OUR_SCRIPTS_PATH=${OUR_SCRIPTS_PATH} \
+    PLUGIN_ROOT_DIR=${PLUGIN_ROOT_DIR} \
+    ZEEK_KAFKA_OS=${ZEEK_KAFKA_OS} \
     docker-compose up -d
 fi
 
