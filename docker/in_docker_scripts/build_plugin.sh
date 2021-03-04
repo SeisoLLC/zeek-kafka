@@ -96,14 +96,14 @@ cd /root || exit 1
 
 echo "==================================================="
 
-zkg -vvv test zeek/seisollc/zeek-kafka --version "${PLUGIN_VERSION}"
+zkg -vvv test zeek/seisollc/zeek-kafka --version "main"
 rc=$?; if [[ ${rc} != 0 ]]; then
   echo "ERROR running zkg test ${rc}"
   printfiles
   exit ${rc}
 fi
 
-zkg -vvv install zeek/seisollc/zeek-kafka --skiptests --version "${PLUGIN_VERSION}" --force
+zkg -vvv install zeek/seisollc/zeek-kafka --skiptests --version "main" --force
 rc=$?; if [[ ${rc} != 0 ]]; then
   echo "ERROR running zkg install ${rc}"
   printfiles
