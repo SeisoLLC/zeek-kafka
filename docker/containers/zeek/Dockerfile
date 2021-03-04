@@ -22,9 +22,6 @@ FROM "${FROM_IMAGE}":"${FROM_IMAGE_TAG}"
 ARG ZEEK_VERSION
 ARG LIBRDKAFKA_VERSION
 
-# install epel for screen
-RUN dnf install -y epel-release
-
 # copy in the .screenrc
 COPY .screenrc /root
 
@@ -74,8 +71,8 @@ ENV PATH="${PATH}:/usr/bin"
 # install pip3 (zkg itself is now available via Zeek)
 WORKDIR /root
 COPY requirements.txt requirements.txt
-RUN dnf -y install python3-pip diffutils && \
-    dnf clean all && \
+RUN apt-get -y install python3-pip diffutils && \
+    apt-get clean all && \
     python3 -m pip install --upgrade pip && \
     python3 -m pip install -r requirements.txt
 
