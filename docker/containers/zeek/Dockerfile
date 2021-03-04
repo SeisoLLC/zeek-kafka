@@ -14,8 +14,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-ARG FROM_IMAGE="centos"
-ARG FROM_IMAGE_TAG="8"
+ARG FROM_IMAGE="ubuntu"
+ARG FROM_IMAGE_TAG="20.04"
 
 FROM "${FROM_IMAGE}":"${FROM_IMAGE_TAG}"
 
@@ -28,19 +28,35 @@ RUN dnf install -y epel-release
 # copy in the .screenrc
 COPY .screenrc /root
 
-# install powertools for libpcap-devel
-RUN dnf install -y 'dnf-command(config-manager)' && \
-    dnf config-manager --set-enabled powertools
+RUN apt-get update && apt-get -y install \
+    git \
+    cmake \
+    make \
+    gcc \
+    g++ \
+    flex \
+    bison \
+    libpcap-dev \
+    libssl-dev \
+    python3 \
+    python3-dev \
+    python3-pip\
+    swig \
+    zlib1g-dev \
+    libmaxminddb-dev \
+    libkrb5-dev \
+    bsdmainutils \
+    sqlite3 \
+    curl \
+    wget \
+    unzip \
+    ruby \
+    bc \
+    lcov \
+  && rm -rf /var/lib/apt/lists/*
 
-# install prereqs then clean dnf cache
-RUN dnf -y update && \
-   dnf -y install cmake make gcc gcc-c++ \
-   flex bison libpcap libpcap-devel \
-   openssl-devel python3 platform-python-devel \
-   swig zlib-devel perl \
-   cyrus-sasl cyrus-sasl-devel cyrus-sasl-gssapi \
-   git jq screen tree vim && \
-   dnf -y clean all
+RUN pip3 install junit2html
+RUN gem install coveralls-lcov
 
 # install zeek
 WORKDIR /root
