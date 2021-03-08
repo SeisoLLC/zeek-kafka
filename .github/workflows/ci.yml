@@ -25,6 +25,7 @@ jobs:
     strategy:
       matrix:
         platform: [Ubuntu-20.04]
+        zeek-kafka-os: [centos, ubuntu]
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v2
@@ -42,6 +43,8 @@ jobs:
             docker load --input ~/cache/docker.tar
           fi && \
           make e2e
+        env:
+          ZEEK_KAFKA_OS: ${{ matrix.zeek-kafka-os }}
       - name: Update docker cache
         run: |
              mkdir -p ~/cache && \
