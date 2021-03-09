@@ -36,6 +36,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
     g++ \
     gcc \
     git \
+    jq \
     lcov \
     libkrb5-dev \
     libmaxminddb-dev \
@@ -49,7 +50,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
     screen \
     sqlite3 \
     swig \
+    tree \
     unzip \
+    vim \
     wget \
     zlib1g-dev \
  && rm -rf /var/lib/apt/lists/*
