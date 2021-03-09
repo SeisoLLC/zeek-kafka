@@ -36,10 +36,10 @@ MISSING_COPYRIGHT=$(find "${DIR}" \( -path "${DIR}/.git" -or \
                  -type f                                     \
          \)                                                  \
                  -print0 |                                   \
-  xargs -0 grep --files-without-match 'Copyright 2020-2.* Zeek-Kafka$' || true)
+  xargs -0 grep --files-without-match "Copyright 2020-$(date +'%Y') Zeek-Kafka$" || true)
 
 if [[ "${MISSING_COPYRIGHT}" ]]; then
-  echo "The following files are missing the Zeek-Kafka copyright"
+  echo "The following files are missing the correct Zeek-Kafka copyright"
   echo "${MISSING_COPYRIGHT}"
   exit 1
 fi
