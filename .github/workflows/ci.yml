@@ -26,6 +26,7 @@ jobs:
       matrix:
         platform: [Ubuntu-20.04]
         zeek-kafka-os: [centos, ubuntu]
+      fail-fast: false
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v2
