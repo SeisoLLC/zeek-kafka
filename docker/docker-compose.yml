@@ -44,7 +44,7 @@ services:
         - zeek-kafka_zeek:latest
         - centos:8
       args:
-        ZEEK_VERSION: "3.2.1"
+        ZEEK_VERSION: "4.0.1"
         LIBRDKAFKA_VERSION: "1.4.2"
     image: zeek-kafka_zeek:latest
     depends_on:

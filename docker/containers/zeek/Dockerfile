@@ -49,25 +49,23 @@ WORKDIR zeek/
 RUN git checkout "v${ZEEK_VERSION}" && \
   git submodule update --init --recursive && \
   ./configure && \
-  make && \
+  make -j $(nproc --all || echo 1) && \
   make install
 ENV PATH="${PATH}:/usr/local/zeek/bin"
 ENV PATH="${PATH}:/usr/bin"
 
-# install pip3 and zkg
+# install pip3 (zkg itself is now available via Zeek)
 WORKDIR /root
 COPY requirements.txt requirements.txt
 RUN dnf -y install python3-pip diffutils && \
     dnf clean all && \
     python3 -m pip install --upgrade pip && \
-    python3 -m pip install -r requirements.txt && \
-    zkg autoconfig
+    python3 -m pip install -r requirements.txt
 
 # install librdkafka
 WORKDIR /root
 RUN curl -L "https://github.com/edenhill/librdkafka/archive/v${LIBRDKAFKA_VERSION}.tar.gz" | tar xvz
 WORKDIR "librdkafka-${LIBRDKAFKA_VERSION}/"
 RUN ./configure --enable-sasl && \
-  make && \
+  make -j $(nproc --all || echo 1) && \
   make install
-
