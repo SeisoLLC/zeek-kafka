@@ -17,7 +17,7 @@
 
 #include "TaggedJSON.h"
 
-namespace threading { namespace formatter {
+namespace zeek::threading::formatter {
 
 TaggedJSON::TaggedJSON(std::string sn, MsgThread* t, JSON::TimeFormat tf): JSON(t, tf), stream_name(sn)
 {}
@@ -56,5 +56,5 @@ bool TaggedJSON::Describe(ODesc* desc, int num_fields, const Field* const* field
   desc->AddRaw("}");
     return true;
 }
-} // namespace formatter
-} // namespace threading
+
+} // namespaces

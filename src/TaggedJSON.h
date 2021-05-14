@@ -18,19 +18,19 @@
 #ifndef ZEEK_PLUGIN_KAFKA_TAGGEDJSON_H
 #define ZEEK_PLUGIN_KAFKA_TAGGEDJSON_H
 
-#include <Desc.h>
 #include <map>
 #include <string>
-#include <threading/Formatter.h>
-#include <threading/formatters/JSON.h>
 
-using threading::Field;
-using threading::MsgThread;
-using threading::Value;
-using threading::formatter::JSON;
+#include <zeek/Desc.h>
+#include <zeek/threading/Formatter.h>
+#include <zeek/threading/formatters/JSON.h>
 
-namespace threading {
-namespace formatter {
+using zeek::threading::Field;
+using zeek::threading::MsgThread;
+using zeek::threading::Value;
+using zeek::threading::formatter::JSON;
+
+namespace zeek::threading::formatter {
 
 /*
  * A JSON formatter that prepends or 'tags' the content with a log stream
@@ -49,6 +49,5 @@ private:
   std::string stream_name;
 };
 
-} // namespace formatter
-} // namespace threading
+} // namespaces
 #endif

@@ -21,10 +21,11 @@
 #include <librdkafka/rdkafkacpp.h>
 #include <map>
 #include <string>
-#include <Desc.h>
-#include <logging/WriterBackend.h>
-#include <threading/formatters/JSON.h>
-#include <threading/Formatter.h>
+
+#include <zeek/Desc.h>
+#include <zeek/logging/WriterBackend.h>
+#include <zeek/threading/formatters/JSON.h>
+#include <zeek/threading/Formatter.h>
 
 #include "kafka.bif.h"
 #include "TaggedJSON.h"
@@ -35,7 +36,7 @@ namespace RdKafka {
     class Topic;
 }
 
-namespace logging { namespace writer {
+namespace zeek::logging::writer {
 
 /**
  * A logging writer that sends data to a Kafka broker.
@@ -72,13 +73,13 @@ private:
     std::map<std::string, std::string> additional_message_values;
     std::string topic_name;
     std::string topic_name_override;
-    threading::formatter::Formatter *formatter;
+    threading::Formatter *formatter;
     RdKafka::Producer* producer;
     RdKafka::Topic* topic;
     RdKafka::Conf* conf;
     RdKafka::Conf* topic_conf;
 };
 
-}}
+}
 
 #endif

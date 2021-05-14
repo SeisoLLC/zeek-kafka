@@ -18,18 +18,19 @@
 #ifndef ZEEK_PLUGIN_KAFKA
 #define ZEEK_PLUGIN_KAFKA
 
+#include <zeek/plugin/Plugin.h>
+
 #include "KafkaWriter.h"
-#include <plugin/Plugin.h>
 
-namespace plugin { namespace Seiso_Kafka {
+namespace zeek::plugin::Seiso_Kafka {
 
-    class Plugin : public ::plugin::Plugin {
+    class Plugin : public zeek::plugin::Plugin {
     protected:
         // Overridden from plugin::Plugin.
-        virtual plugin::Configuration Configure();
+        virtual zeek::plugin::Configuration Configure();
     };
 
     extern Plugin plugin;
-}}
+}
 
 #endif

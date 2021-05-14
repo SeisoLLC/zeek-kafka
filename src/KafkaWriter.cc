@@ -18,7 +18,7 @@
 #include "KafkaWriter.h"
 #include "events.bif.h"
 
-using namespace logging;
+using namespace zeek::logging;
 using namespace writer;
 
 // The Constructor is called once for each log filter that uses this log writer.
@@ -46,30 +46,28 @@ KafkaWriter::KafkaWriter(WriterFrontend *frontend)
   // kafka_conf - thread local copy
   Val *val = BifConst::Kafka::kafka_conf->AsTableVal();
   IterCookie *c = val->AsTable()->InitForIteration();
-  HashKey *k;
+  zeek::detail::HashKey *k;
   TableEntryVal *v;
   while ((v = val->AsTable()->NextEntry(k, c))) {
     // fetch the key and value
-    ListVal *index = val->AsTableVal()->RecoverIndex(k);
-    std::string key = index->Index(0)->AsString()->CheckString();
-    std::string val = v->Value()->AsString()->CheckString();
+    ListValPtr index = val->AsTableVal()->RecreateIndex(*k);
+    std::string key = index->Idx(0)->AsString()->CheckString();
+    std::string val = v->GetVal()->AsString()->CheckString();
     kafka_conf.insert(kafka_conf.begin(),
                       std::pair<std::string, std::string>(key, val));
 
     // cleanup
-    Unref(index);
     delete k;
   }
 
   Val *mvals = BifConst::Kafka::additional_message_values->AsTableVal();
   c = val->AsTable()->InitForIteration();
   while ((v = mvals->AsTable()->NextEntry(k, c))) {
-    ListVal *index = mvals->AsTableVal()->RecoverIndex(k);
-    std::string key = index->Index(0)->AsString()->CheckString();
-    std::string val = v->Value()->AsString()->CheckString();
+    ListValPtr index = mvals->AsTableVal()->RecreateIndex(*k);
+    std::string key = index->Idx(0)->AsString()->CheckString();
+    std::string val = v->GetVal()->AsString()->CheckString();
     additional_message_values.insert(additional_message_values.begin(),
                                      std::pair<std::string, std::string>(key, val));
-    Unref(index);
     delete k;
   }
 }
@@ -331,8 +329,8 @@ bool KafkaWriter::DoHeartbeat(double network_time, double current_time) {
  */
 void KafkaWriter::raise_topic_resolved_event(const std::string topic) {
   if (kafka_topic_resolved_event) {
-    val_list *vl = new val_list;
-    vl->append(new StringVal(topic.c_str()));
-    mgr.QueueEvent(kafka_topic_resolved_event, vl);
+    zeek::Args args;
+    args.emplace_back(make_intrusive<StringVal>(topic.c_str()));
+    zeek::event_mgr.Enqueue(kafka_topic_resolved_event, std::move(args));
   }
 }
