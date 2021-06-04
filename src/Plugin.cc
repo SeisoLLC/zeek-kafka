@@ -17,17 +17,18 @@
 
 #include "Plugin.h"
 
-namespace plugin { namespace Seiso_Kafka {
+namespace zeek::plugin::Seiso_Kafka {
     Plugin plugin;
-}}
+}
 
-using namespace plugin::Seiso_Kafka;
+using namespace zeek::plugin::Seiso_Kafka;
 
-plugin::Configuration Plugin::Configure()
+zeek::plugin::Configuration Plugin::Configure()
 {
-    AddComponent(new ::logging::Component("KafkaWriter", ::logging::writer::KafkaWriter::Instantiate));
+    AddComponent(new zeek::logging::Component("KafkaWriter",
+        zeek::logging::writer::KafkaWriter::Instantiate));
 
-    plugin::Configuration config;
+    zeek::plugin::Configuration config;
     config.name = "Seiso::Kafka";
     config.description = "Writes logs to Kafka";
     config.version.major = 0;
