@@ -85,5 +85,6 @@ RUN curl -L "https://github.com/edenhill/librdkafka/archive/v${LIBRDKAFKA_VERSIO
 WORKDIR "librdkafka-${LIBRDKAFKA_VERSION}/"
 RUN ./configure --enable-sasl --install-deps \
  && make -j $(nproc --all || echo 1) \
- && make install
+ && make install \
+ && ldconfig
 
