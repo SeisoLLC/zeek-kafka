@@ -76,7 +76,6 @@ RUN git checkout "v${ZEEK_VERSION}" \
  && git submodule update --init --recursive \
  && ./configure \
  && make -j $(nproc --all || echo 1) && \
- && make \
  && make install \
  && ldconfig
 ENV PATH="${PATH}:/usr/local/zeek/bin"
@@ -96,6 +95,5 @@ WORKDIR /root
 RUN curl -L "https://github.com/edenhill/librdkafka/archive/v${LIBRDKAFKA_VERSION}.tar.gz" | tar xvz
 WORKDIR "librdkafka-${LIBRDKAFKA_VERSION}/"
 RUN ./configure --enable-sasl --install-deps \
-  make -j $(nproc --all || echo 1) && \
- && make \
+ && make -j $(nproc --all || echo 1) \
  && make install
