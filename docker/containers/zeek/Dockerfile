@@ -50,7 +50,8 @@ RUN git checkout "v${ZEEK_VERSION}" && \
   git submodule update --init --recursive && \
   ./configure && \
   make -j $(nproc --all || echo 1) && \
-  make install
+  make install && \
+  ldconfig
 ENV PATH="${PATH}:/usr/local/zeek/bin"
 ENV PATH="${PATH}:/usr/bin"
 
