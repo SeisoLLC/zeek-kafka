@@ -45,25 +45,25 @@ A Zeek log writer that sends logging output to Kafka, providing a convenient mea
 1. Install the plugin using `zkg install`.
 
     ```
-    $ zkg install seiso/zeek-kafka --version main
+    $ zkg install seisollc/zeek-kafka --version main
     The following packages will be INSTALLED:
-      zeek/seiso/zeek-kafka (main)
+      zeek/seisollc/zeek-kafka (main)
 
     Verify the following REQUIRED external dependencies:
     (Ensure their installation on all relevant systems before proceeding):
-      from zeek/seiso/zeek-kafka (main):
+      from zeek/seisollc/zeek-kafka (main):
         librdkafka ~1.4.2
 
     Proceed? [Y/n]
-    zeek/seiso/zeek-kafka asks for LIBRDKAFKA_ROOT (Path to librdkafka installation tree) ? [/usr/local/lib]
+    zeek/seisollc/zeek-kafka asks for LIBRDKAFKA_ROOT (Path to librdkafka installation tree) ? [/usr/local/lib]
     Saved answers to config file: /home/jonzeolla/.zkg/config
-    Running unit tests for "zeek/seiso/zeek-kafka"
+    Running unit tests for "zeek/seisollc/zeek-kafka"
     all 10 tests successful
 
 
-    Installing "zeek/seiso/zeek-kafka"........
-    Installed "zeek/seiso/zeek-kafka" (main)
-    Loaded "zeek/seiso/zeek-kafka"
+    Installing "zeek/seisollc/zeek-kafka"........
+    Installed "zeek/seisollc/zeek-kafka" (main)
+    Loaded "zeek/seisollc/zeek-kafka"
     ```
 
 1. Run the following command to ensure that the plugin was installed successfully.
@@ -97,6 +97,7 @@ These instructions could also be helpful if you were interested in distributing 
     $ ./configure --with-librdkafka=$librdkafka_root
     $ make
     $ sudo make install
+    $ ldconfig
     ```
 
 1. Run the following command to ensure that the plugin was installed successfully.
@@ -119,7 +120,7 @@ The goal in this example is to send all HTTP and DNS records to a Kafka topic na
  * The `topic_name` will default to send all records to a single Kafka topic called 'zeek'.
  * Defining `logs_to_send` will send the HTTP and DNS records to the brokers specified in your `Kafka::kafka_conf`.
 ```
-@load packages/zeek-kafka/Seiso/Kafka
+@load packages/zeek-kafka
 redef Kafka::logs_to_send = set(HTTP::LOG, DNS::LOG);
 redef Kafka::kafka_conf = table(
     ["metadata.broker.list"] = "server1.example.com:9092,server2.example.com:9092"
@@ -131,7 +132,7 @@ redef Kafka::kafka_conf = table(
 This plugin has the ability send all active logs to the "zeek" kafka topic with the following configuration.
 
 ```
-@load packages/zeek-kafka/Seiso/Kafka
+@load packages/zeek-kafka
 redef Kafka::send_all_active_logs = T;
 redef Kafka::kafka_conf = table(
     ["metadata.broker.list"] = "localhost:9092"
@@ -143,7 +144,7 @@ redef Kafka::kafka_conf = table(
 You can also specify a blacklist of zeek logs to ensure they aren't being sent to kafka regardless of the `Kafka::send_all_active_logs` and `Kafka::logs_to_send` configurations. In this example, we will send all of the enabled logs except for the Conn log.
 
 ```
-@load packages/zeek-kafka/Seiso/Kafka
+@load packages/zeek-kafka
 redef Kafka::send_all_active_logs = T;
 redef Kafka::logs_to_exclude = set(Conn::LOG);
 redef Kafka::topic_name = "zeek";
@@ -161,7 +162,7 @@ It is also possible to send each log stream to a uniquely named topic. The goal 
  * Each log writer accepts a separate configuration table.
 
 ```
-@load packages/zeek-kafka/Seiso/Kafka
+@load packages/zeek-kafka
 redef Kafka::topic_name = "";
 redef Kafka::tag_json = T;
 
@@ -199,7 +200,7 @@ You may want to configure zeek to filter log messages with certain characteristi
  * If the log message contains a 128 byte long source or destination IP address, the log is not sent to kafka.
 
 ```
-@load packages/zeek-kafka/Seiso/Kafka
+@load packages/zeek-kafka
 redef Kafka::tag_json = T;
 
 event zeek_init() &priority=-10
@@ -246,7 +247,7 @@ event zeek_init() &priority=-10
 You are able to send a single zeek log to multiple different kafka topics in the same kafka cluster by overriding the default topic (configured with `Kafka::topic_name`) by creating a custom zeek `Log::Filter`. In this example, the DHCP, RADIUS, and DNS logs are sent to the "zeek" topic; the RADIUS log is duplicated to the "shew_zeek_radius" topic; and the DHCP log is duplicated to the "shew_zeek_dhcp" topic.
 
 ```
-@load packages/zeek-kafka/Seiso/Kafka
+@load packages/zeek-kafka
 redef Kafka::logs_to_send = set(DHCP::LOG, RADIUS::LOG, DNS::LOG);
 redef Kafka::topic_name = "zeek";
 redef Kafka::kafka_conf = table(
@@ -283,7 +284,7 @@ It is possible to define name value pairs and have them added to each outgoing K
     * the Kafka::additional_message_values table can be configured with each name and value
     * based on the following configuration, each outgoing message will have "FIRST_STATIC_NAME": "FIRST_STATIC_VALUE", "SECOND_STATIC_NAME": "SECOND_STATIC_VALUE" added.
 ```
-@load packages
+@load packages/zeek-kafka
 redef Kafka::logs_to_send = set(HTTP::LOG, DNS::LOG, Conn::LOG, DPD::LOG, FTP::LOG, Files::LOG, Known::CERTS_LOG, SMTP::LOG, SSL::LOG, Weird::LOG, Notice::LOG, DHCP::LOG, SSH::LOG, Software::LOG, RADIUS::LOG, X509::LOG, RFB::LOG, Stats::LOG, CaptureLoss::LOG, SIP::LOG);
 redef Kafka::topic_name = "zeek";
 redef Kafka::tag_json = T;
@@ -441,7 +442,7 @@ ${KAFKA_HOME}/kafka-broker/bin/kafka-acls.sh --authorizer kafka.security.auth.Si
 
 The following is how the `${ZEEK_HOME}/share/zeek/site/local.zeek` looks:
 ```
-@load packages/zeek-kafka/Seiso/Kafka
+@load packages/zeek-kafka
 redef Kafka::logs_to_send = set(HTTP::LOG, DNS::LOG);
 redef Kafka::topic_name = "zeek";
 redef Kafka::tag_json = T;
