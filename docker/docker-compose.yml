@@ -40,9 +40,10 @@ services:
   zeek:
     build:
       context: containers/zeek
+      dockerfile: Dockerfile.${ZEEK_KAFKA_OS}
       cache_from:
         - zeek-kafka_zeek:latest
-        - centos:8
+        - ${ZEEK_KAFKA_OS}
       args:
         ZEEK_VERSION: "4.0.1"
         LIBRDKAFKA_VERSION: "1.4.2"

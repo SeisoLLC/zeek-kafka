@@ -20,6 +20,7 @@
 SHELL           := bash
 CMAKE_BUILD_DIR  = build
 ARCH             = `uname -s | tr A-Z a-z`-`uname -m`
+ZEEK_KAFKA_OS   ?= centos
 
 .PHONY: all
 all: build-it
@@ -53,9 +54,9 @@ test:
 .PHONY: e2e
 e2e:
 	cd docker/ && if [[ "$${GITHUB_ACTIONS,,}" == "true" ]]; then \
-	  ./run_end_to_end.sh --data-path="$${RUNNER_TEMP}" --test-output="$${RUNNER_TEMP}" && ./finish_end_to_end.sh ; \
+	  ./run_end_to_end.sh --data-path="$${RUNNER_TEMP}" --test-output="$${RUNNER_TEMP}" --zeek-kafka-os="$(ZEEK_KAFKA_OS)" && ./finish_end_to_end.sh ; \
 	else \
-	  ./run_end_to_end.sh && ./finish_end_to_end.sh ; \
+	  ./run_end_to_end.sh --zeek-kafka-os="$(ZEEK_KAFKA_OS)" && ./finish_end_to_end.sh ; \
 	fi
 
 .PHONY: lint

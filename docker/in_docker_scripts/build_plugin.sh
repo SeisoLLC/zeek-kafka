@@ -39,11 +39,8 @@ function help {
 
 function printfiles {
   echo "==================================================="
-  echo "ERR"
-  cat /root/.zkg/testing/code/clones/code/zkg.test_command.stderr
-  echo "==================================================="
-  echo "OUT"
-  cat /root/.zkg/testing/code/clones/code/zkg.test_command.stdout
+  echo "Output"
+  cat /root/.zkg/testing/zeek-kafka/clones/zeek-kafka
   echo "==================================================="
   echo ""
   echo "==================================================="
