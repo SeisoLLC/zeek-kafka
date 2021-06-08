@@ -14,48 +14,45 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-ARG FROM_IMAGE="centos"
-ARG FROM_IMAGE_TAG="8"
-
-FROM "${FROM_IMAGE}":"${FROM_IMAGE_TAG}"
+FROM centos:8
 
 ARG ZEEK_VERSION
 ARG LIBRDKAFKA_VERSION
 
 # install epel for screen
-RUN dnf install -y epel-release
+RUN dnf install -y --nodocs epel-release
 
 # copy in the .screenrc
 COPY .screenrc /root
 
 # install powertools for libpcap-devel
-RUN dnf install -y 'dnf-command(config-manager)' \
+RUN dnf install -y --nodocs 'dnf-command(config-manager)' \
  && dnf config-manager --set-enabled powertools
 
 # install prereqs then clean dnf cache
 RUN dnf -y update \
- && dnf -y install bison \
-                   cmake \
-                   cyrus-sasl \
-                   cyrus-sasl-devel \
-                   cyrus-sasl-gssapi \
-                   flex \
-                   gcc \
-                   gcc-c++ \
-                   git \
-                   jq \
-                   libpcap \
-                   libpcap-devel \
-                   make \
-                   openssl-devel \
-                   perl \
-                   platform-python-devel \
-                   python3 \
-                   screen \
-                   swig \
-                   tree \
-                   vim \
-                   zlib-devel \
+ && dnf -y --nodocs install bison \
+                            cmake \
+                            cyrus-sasl \
+                            cyrus-sasl-devel \
+                            cyrus-sasl-gssapi \
+                            flex \
+                            gcc \
+                            gcc-c++ \
+                            git \
+                            jq \
+                            libpcap \
+                            libpcap-devel \
+                            make \
+                            openssl-devel \
+                            perl \
+                            platform-python-devel \
+                            python3 \
+                            screen \
+                            swig \
+                            tree \
+                            vim \
+                            zlib-devel \
  && dnf -y clean all
 
 # install zeek
