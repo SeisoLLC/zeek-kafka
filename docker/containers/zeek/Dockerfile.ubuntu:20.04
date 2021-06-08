@@ -57,7 +57,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
 RUN pip3 install junit2html
 RUN gem install coveralls-lcov
 
-# install zeek
+# install zeek (and zkg by default, as of 4.0.0)
 WORKDIR /root
 RUN git clone https://github.com/zeek/zeek
 WORKDIR zeek/
@@ -70,7 +70,7 @@ RUN git checkout "v${ZEEK_VERSION}" \
 ENV PATH="${PATH}:/usr/local/zeek/bin"
 ENV PATH="${PATH}:/usr/bin"
 
-# install pip3 (zkg itself is now available via Zeek)
+# install pip3 and zkg dependencies
 WORKDIR /root
 COPY requirements.txt requirements.txt
 RUN apt-get -y install diffutils \

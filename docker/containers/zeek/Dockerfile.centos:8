@@ -55,7 +55,7 @@ RUN dnf -y update \
                             zlib-devel \
  && dnf -y clean all
 
-# install zeek
+# install zeek (and zkg by default, as of 4.0.0)
 WORKDIR /root
 RUN git clone https://github.com/zeek/zeek
 WORKDIR zeek/
@@ -63,11 +63,12 @@ RUN git checkout "v${ZEEK_VERSION}" \
  && git submodule update --init --recursive \
  && ./configure \
  && make -j $(nproc --all || echo 1) \
- && make install
+ && make install \
+ && ldconfig
 ENV PATH="${PATH}:/usr/local/zeek/bin"
 ENV PATH="${PATH}:/usr/bin"
 
-# install pip3
+# install pip3 and zkg dependencies
 WORKDIR /root
 COPY requirements.txt requirements.txt
 RUN dnf -y install diffutils \
@@ -84,4 +85,3 @@ RUN ./configure --enable-sasl --install-deps \
  && make -j $(nproc --all || echo 1) \
  && make install \
  && ldconfig
-
