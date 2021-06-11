@@ -459,10 +459,10 @@ If you are interested in contributing to this plugin, please see our [CONTRIBUTI
 
 ### Releases
 
-In order to create a release, run the following commands, where `$TYPE` is one of `major`, `minor`, or `patch`.
+In order to create a release, run the following commands, where `$TYPE` is one of `major`, `minor`, `patch`, `build`, or `release`.
 
 ```bash
-git checkout main
-pipenv run invoke release $TYPE
+git checkout main  # Releases should always come from main
+pipenv run invoke version $TYPE
 git push --atomic origin $(git branch --show-current) $(git describe --tags)
 ```

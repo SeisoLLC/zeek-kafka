@@ -3,6 +3,7 @@
 Task execution tool & library
 """
 
+import re
 import sys
 from logging import basicConfig, getLogger
 from pathlib import Path
@@ -32,14 +33,14 @@ except git.InvalidGitRepositoryError:
 
 
 @task
-def release(_c, release_type):
+def version(_c, version_type):
     """Make a new release of zeek-kafka"""
     if REPO.head.is_detached:
         LOG.error("In detached HEAD state, refusing to release")
         sys.exit(1)
 
-    if release_type not in ["major", "minor", "patch"]:
-        LOG.error("Please provide a release type of major, minor, or patch")
+    if version_type not in ["major", "minor", "patch", "build", "release"]:
+        LOG.error("Please provide a release type of major, minor, patch, build, or release")
         sys.exit(1)
 
-    bumpversion([release_type])
+    bumpversion([version_type])
