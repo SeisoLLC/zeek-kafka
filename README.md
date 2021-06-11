@@ -45,13 +45,13 @@ A Zeek log writer that sends logging output to Kafka, providing a convenient mea
 1. Install the plugin using `zkg install`.
 
     ```
-    $ zkg install seisollc/zeek-kafka --version main
+    $ zkg install seisollc/zeek-kafka --version 0.4.0
     The following packages will be INSTALLED:
-      zeek/seisollc/zeek-kafka (main)
+      zeek/seisollc/zeek-kafka (0.4.0)
 
     Verify the following REQUIRED external dependencies:
     (Ensure their installation on all relevant systems before proceeding):
-      from zeek/seisollc/zeek-kafka (main):
+      from zeek/seisollc/zeek-kafka (0.4.0):
         librdkafka ~1.4.2
 
     Proceed? [Y/n]
@@ -62,7 +62,7 @@ A Zeek log writer that sends logging output to Kafka, providing a convenient mea
 
 
     Installing "zeek/seisollc/zeek-kafka"........
-    Installed "zeek/seisollc/zeek-kafka" (main)
+    Installed "zeek/seisollc/zeek-kafka" (0.4.0)
     Loaded "zeek/seisollc/zeek-kafka"
     ```
 
@@ -70,7 +70,7 @@ A Zeek log writer that sends logging output to Kafka, providing a convenient mea
 
     ```
     $ zeek -N Seiso::Kafka
-    Seiso::Kafka - Writes logs to Kafka (dynamic, version 0.3.0)
+    Seiso::Kafka - Writes logs to Kafka (dynamic, version 0.4.0)
     ```
 
 ### Manual Installation
@@ -104,7 +104,7 @@ These instructions could also be helpful if you were interested in distributing 
 
     ```
     $ zeek -N Seiso::Kafka
-    Seiso::Kafka - Writes logs to Kafka (dynamic, version 0.3.0)
+    Seiso::Kafka - Writes logs to Kafka (dynamic, version 0.4.0)
     ```
 
 ## Activation
@@ -456,3 +456,13 @@ redef Kafka::kafka_conf = table( ["metadata.broker.list"] = "node1:6667"
 ## Contributing
 
 If you are interested in contributing to this plugin, please see our [CONTRIBUTING.md](.github/CONTRIBUTING.md).
+
+### Releases
+
+In order to create a release, run the following commands, where `$TYPE` is one of `major`, `minor`, or `patch`.
+
+```bash
+git checkout main
+pipenv run invoke release $TYPE
+git push --atomic origin $(git branch --show-current) $(git describe --tags)
+```
