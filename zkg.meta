@@ -12,4 +12,4 @@ depends =
 external_depends =
   librdkafka ~1.4.2-RC1
 user_vars =
-  LIBRDKAFKA_ROOT [/usr/local/lib] "Path to librdkafka installation tree"
+  LIBRDKAFKA_ROOT [/usr/local] "Path to librdkafka installation tree root"

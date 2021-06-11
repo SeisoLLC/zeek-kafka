@@ -55,7 +55,7 @@ A Zeek log writer that sends logging output to Kafka, providing a convenient mea
         librdkafka ~1.4.2
 
     Proceed? [Y/n]
-    zeek/seisollc/zeek-kafka asks for LIBRDKAFKA_ROOT (Path to librdkafka installation tree) ? [/usr/local/lib]
+    zeek/seisollc/zeek-kafka asks for LIBRDKAFKA_ROOT (Path to librdkafka installation tree) ? [/usr/local]
     Saved answers to config file: /home/jonzeolla/.zkg/config
     Running unit tests for "zeek/seisollc/zeek-kafka"
     all 10 tests successful
