@@ -22,7 +22,7 @@
 plugin_usage()
 {
   cat <<EOF
-  --with-librdkafka=PATH	 path to librdkafka
+  --with-librdkafka=PATH	 path to librdkafka install root
   --with-openssl=PATH      path to OpenSSL install root
 EOF
 }
