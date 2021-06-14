@@ -456,13 +456,3 @@ redef Kafka::kafka_conf = table( ["metadata.broker.list"] = "node1:6667"
 ## Contributing
 
 If you are interested in contributing to this plugin, please see our [CONTRIBUTING.md](.github/CONTRIBUTING.md).
-
-### Releases
-
-In order to create a release, run the following commands, where `$TYPE` is one of `major`, `minor`, `patch`, `build`, or `release`.
-
-```bash
-git checkout main  # Releases should always come from main
-pipenv run invoke version $TYPE
-git push --atomic origin $(git branch --show-current) $(git describe --tags)
-```
