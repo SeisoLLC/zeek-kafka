@@ -27,11 +27,13 @@ MISSING_COPYRIGHT=$(find "${DIR}" \( -path "${DIR}/.git" -or \
             -and -not -name "*.yml"                          \
             -and -not -name "*.pcap"                         \
             -and -not -name "*.pcapng"                       \
-            -and -not -name "requirements*.txt"              \
+            -and -not -name "COPYING"                        \
             -and -not -name "Dockerfile"                     \
+            -and -not -name "Pipfile*"                       \
             -and -not -name "output"                         \
             -and -not -name "random.seed"                    \
-            -and -not -name "COPYING"                        \
+            -and -not -name "requirements*.txt"              \
+            -and -not -name "setup.cfg"                      \
             -and -not -name "zkg.meta"                       \
                  -type f                                     \
          \)                                                  \
