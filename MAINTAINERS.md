@@ -51,9 +51,9 @@ If a release candidate has known issues, the maintainers can decide whether to
 release anyway, or contribute additional to mitigate or resolve the issue and
 increment the `build` and issue a new release candidate.
 
-### Announcing a release
+### Announcing
 
-After creating a release, consider announcing it to the following areas:
+After creating a release or release candidate, consider announcing it to the following areas:
 
 - The [Zeek Slack workspace](zeekorg.slack.com)
 - The [Zeek user mailing list](https://lists.zeek.org/mailman3/lists/zeek.lists.zeek.org/)
