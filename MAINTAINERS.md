@@ -13,21 +13,48 @@
 -->
 # Maintainers Guide
 
-This guide is intended for maintainers — anybody with commit access to the `zeek-kafka` repository.
+This guide is intended for maintainers — anybody with commit access to the
+`zeek-kafka` repository.
 
 ## Releases
 
-All `zeek-kafka` releases first have a release candidate prior to being promoted to general availability.
+All `zeek-kafka` releases first have a release candidate prior to being
+promoted to general availability.
 
-In order to create a release, you must have `pipenv` and `python3` installed, and then run the following commands, where `$TYPE` is one of `major`, `minor`, `patch`, `build`, or `release`.
+In order to create a release, you must have `pipenv` and `python3` installed,
+and then run the following commands, where `$TYPE` is one of `major`, `minor`,
+`patch`, `build`, or `release`.
 
 ```bash
 TYPE=major
 REMOTE=origin
 
-git checkout main  # Releases should always come from main
+git checkout main
+git pull $REMOTE main
 pipenv run invoke version $TYPE
 git push --atomic $REMOTE $(git branch --show-current) $(git tag --points-at HEAD)
 ```
 
-The previous commands result in a tagged commit containing updated version references in `zkg.meta` and `README.md` (as defined in `setup.cfg`) being pushed to GitHub, at which point GitHub actions performs the remaining release actions based on `.github/workflows/release.yml` and `.github/workflows/prerelease.yml`.
+The previous commands result in a tagged commit containing updated version
+references in `zkg.meta` and `README.md` (as defined in `setup.cfg`) being
+pushed to GitHub, at which point GitHub actions performs the remaining release
+actions based on `.github/workflows/release.yml` and
+`.github/workflows/prerelease.yml`.
+
+### Promoting a RC to GA
+
+After a release candidate has been published for one week, assuming no new
+issues have been discovered, a final release can be published. Follow the prior
+steps with a `TYPE` of `release`.
+
+If a release candidate has known issues, the maintainers can decide whether to
+release anyway, or contribute additional to mitigate or resolve the issue and
+increment the `build` and issue a new release candidate.
+
+### Announcing
+
+After creating a release or release candidate, consider announcing it to the following areas:
+
+- The [Zeek Slack workspace](zeekorg.slack.com)
+- The [Zeek user mailing list](https://lists.zeek.org/mailman3/lists/zeek.lists.zeek.org/)
+- Twitter, using #Zeek and #Kafka
