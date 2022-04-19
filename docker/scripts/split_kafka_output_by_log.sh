@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2143,SC1083,SC2002,SC2126
 #
-#  Copyright 2020-2021 Zeek-Kafka
+#  Copyright 2020-2022 Zeek-Kafka
 #  Copyright 2015-2020 The Apache Software Foundation
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
