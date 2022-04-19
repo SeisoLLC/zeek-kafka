@@ -14,7 +14,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-FROM centos:8
+FROM redhat/ubi8:8.5
 
 ARG ZEEK_VERSION
 ARG LIBRDKAFKA_VERSION
