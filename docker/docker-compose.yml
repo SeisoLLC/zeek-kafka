@@ -46,7 +46,7 @@ services:
         - ${ZEEK_KAFKA_OS}
       args:
         ZEEK_VERSION: "4.0.5"
-        LIBRDKAFKA_VERSION: "1.6.2"
+        LIBRDKAFKA_VERSION: "1.4.4"
     image: zeek-kafka_zeek:latest
     depends_on:
       zookeeper:
