@@ -30,12 +30,12 @@ set -o pipefail
 function help {
   echo " "
   echo "USAGE"
-  echo "    --zeek-kafka-os     [OPTIONAL] The OS to run zeek and zeek-kafka in. Default: ubi"
+  echo "    --zeek-kafka-os     [OPTIONAL] The OS to run zeek and zeek-kafka in. Default: ubuntu"
   echo "    -h/--help           Usage information."
 }
 
 PROJECT_NAME="zeek-kafka"
-ZEEK_KAFKA_OS="ubi"
+ZEEK_KAFKA_OS="ubuntu"
 
 # Handle command line options
 for i in "$@"; do
@@ -62,10 +62,8 @@ done
 
 if [[ "${ZEEK_KAFKA_OS}" == "ubuntu" ]]; then
   ZEEK_KAFKA_OS="ubuntu:20.04"
-elif [[ "${ZEEK_KAFKA_OS}" == "ubi" ]]; then
-  ZEEK_KAFKA_OS="ubi8"
 else
-  echo "OS must be ubuntu or ubi"
+  echo "OS must be ubuntu"
   exit 1
 fi
 

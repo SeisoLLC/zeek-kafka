@@ -20,7 +20,7 @@
 SHELL           := bash
 CMAKE_BUILD_DIR  = build
 ARCH             = `uname -s | tr A-Z a-z`-`uname -m`
-ZEEK_KAFKA_OS   ?= ubi
+ZEEK_KAFKA_OS   ?= ubuntu
 
 .PHONY: all
 all: build-it

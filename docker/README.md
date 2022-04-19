@@ -223,7 +223,7 @@ Other scripts may then be used to do your testing, for example running:
 --plugin-version                [OPTIONAL] The plugin version. Default: the current branch name
 --skip-docker-build             [OPTIONAL] Skip build of zeek docker machine.
 --test-output                   [OPTIONAL] The test output path. Default: ./test_output/DATETIME
---zeek-kafka-os                 [OPTIONAL] The OS to run zeek and zeek-kafka in. Default: ubi
+--zeek-kafka-os                 [OPTIONAL] The OS to run zeek and zeek-kafka in. Default: ubuntu
 ```
 
 > NOTE: The provided `--plugin-version` is passed to the [`zkg install`](https://docs.zeek.org/projects/package-manager/en/stable/zeek-pkg.html#install-command) command within the container, which allows you to specify a version tag, branch name, or commit hash.  However, that tag, branch, or commit *must* be available in the currently checked out plugin repository.
@@ -231,7 +231,7 @@ Other scripts may then be used to do your testing, for example running:
 ##### `finish_end_to_end.sh`
 ###### Parameters
 ```bash
---zeek-kafka-os     [OPTIONAL] The OS to run zeek and zeek-kafka in. Default: ubi
+--zeek-kafka-os     [OPTIONAL] The OS to run zeek and zeek-kafka in. Default: ubuntu
 ```
 
 > NOTE: Currently, the OS definition for `finish_end_to_end.sh` does not need to be specified to work, regardless of which `zeek-kafka` OS was created with `run_end_to_end.sh`.
