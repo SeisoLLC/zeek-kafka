@@ -52,7 +52,7 @@ A Zeek log writer that sends logging output to Kafka, providing a convenient mea
     Verify the following REQUIRED external dependencies:
     (Ensure their installation on all relevant systems before proceeding):
       from zeek/seisollc/zeek-kafka (1.0.0):
-        librdkafka ~1.4.4
+        librdkafka ~1.4.2
 
     Proceed? [Y/n]
     zeek/seisollc/zeek-kafka asks for LIBRDKAFKA_ROOT (Path to librdkafka installation tree) ? [/usr/local]
