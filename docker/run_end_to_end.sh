@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-#  Copyright 2020-2021 Zeek-Kafka
+#  Copyright 2020-2022 Zeek-Kafka
 #  Copyright 2015-2020 The Apache Software Foundation
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,7 +31,7 @@ function help {
   echo "    --plugin-version                [OPTIONAL] The plugin version. Default: the current branch name"
   echo "    --skip-docker-build             [OPTIONAL] Skip build of zeek docker machine."
   echo "    --test-output                   [OPTIONAL] The test output path. Default: ./test_output/DATETIME"
-  echo "    --zeek-kafka-os                 [OPTIONAL] The OS to run zeek and zeek-kafka in. Default: centos"
+  echo "    --zeek-kafka-os                 [OPTIONAL] The OS to run zeek and zeek-kafka in. Default: ubuntu"
   echo "    -h/--help                       Usage information."
   echo " "
   echo "COMPATABILITY"
@@ -57,7 +57,7 @@ LOG_DATE=${DATE// /_}
 TEST_OUTPUT_PATH="${ROOT_DIR}/test_output/"${LOG_DATE//:/_}
 KAFKA_TOPIC="zeek"
 PARTITIONS=2
-ZEEK_KAFKA_OS="centos"
+ZEEK_KAFKA_OS="ubuntu"
 PROJECT_NAME="zeek-kafka"
 OUR_SCRIPTS_PATH="${PLUGIN_ROOT_DIR}/docker/in_docker_scripts"
 
@@ -194,10 +194,8 @@ echo "==================================================="
 
 if [[ "${ZEEK_KAFKA_OS}" == "ubuntu" ]]; then
   ZEEK_KAFKA_OS="ubuntu:20.04"
-elif [[ "${ZEEK_KAFKA_OS}" == "centos" ]]; then
-  ZEEK_KAFKA_OS="centos:8"
 else
-  echo "OS must be ubuntu or centos"
+  echo "OS must be ubuntu"
   exit 1
 fi
 

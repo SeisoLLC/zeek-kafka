@@ -1,5 +1,5 @@
 #
-#  Copyright 2020-2021 Zeek-Kafka
+#  Copyright 2020-2022 Zeek-Kafka
 #  Copyright 2015-2020 The Apache Software Foundation
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,7 +20,7 @@
 SHELL           := bash
 CMAKE_BUILD_DIR  = build
 ARCH             = `uname -s | tr A-Z a-z`-`uname -m`
-ZEEK_KAFKA_OS   ?= centos
+ZEEK_KAFKA_OS   ?= ubuntu
 
 .PHONY: all
 all: build-it

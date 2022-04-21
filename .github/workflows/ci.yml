@@ -23,7 +23,7 @@ jobs:
     strategy:
       matrix:
         platform: [Ubuntu-20.04]
-        zeek-kafka-os: [centos, ubuntu]
+        zeek-kafka-os: [ubuntu]
       fail-fast: false
     runs-on: ${{ matrix.platform }}
     steps:
