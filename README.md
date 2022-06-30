@@ -35,7 +35,7 @@ A Zeek log writer that sends logging output to Kafka, providing a convenient mea
     ```
     $ curl -L https://github.com/edenhill/librdkafka/archive/v1.4.4.tar.gz | tar xvz
     $ cd librdkafka-1.4.4/
-    $ ./configure --enable-sasl
+    $ ./configure
     $ make
     $ sudo make install
     ```
