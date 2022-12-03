@@ -17,9 +17,21 @@
 
 #include "KafkaWriter.h"
 #include "events.bif.h"
+#include "zeek/Dict.h"
 
 using namespace zeek::logging;
 using namespace writer;
+
+namespace {
+  // Place elements from zeek::TableVal t in to std::map m
+  void ToStdMap(std::map<std::string, std::string>& m, zeek::TableVal *t) {
+    for (const auto &iter : t->ToMap() ) {
+      std::string key = iter.first->AsListVal()->Idx(0)->AsString()->CheckString();
+      std::string value = iter.second->AsString()->CheckString();
+      m.insert(m.begin(), std::pair<std::string, std::string>(key, value));
+    }
+  }
+}
 
 // The Constructor is called once for each log filter that uses this log writer.
 KafkaWriter::KafkaWriter(WriterFrontend *frontend)
@@ -43,33 +55,9 @@ KafkaWriter::KafkaWriter(WriterFrontend *frontend)
   topic_name.assign((const char *)BifConst::Kafka::topic_name->Bytes(),
                     BifConst::Kafka::topic_name->Len());
 
-  // kafka_conf - thread local copy
-  Val *val = BifConst::Kafka::kafka_conf->AsTableVal();
-  IterCookie *c = val->AsTable()->InitForIteration();
-  zeek::detail::HashKey *k;
-  TableEntryVal *v;
-  while ((v = val->AsTable()->NextEntry(k, c))) {
-    // fetch the key and value
-    ListValPtr index = val->AsTableVal()->RecreateIndex(*k);
-    std::string key = index->Idx(0)->AsString()->CheckString();
-    std::string val = v->GetVal()->AsString()->CheckString();
-    kafka_conf.insert(kafka_conf.begin(),
-                      std::pair<std::string, std::string>(key, val));
-
-    // cleanup
-    delete k;
-  }
-
-  Val *mvals = BifConst::Kafka::additional_message_values->AsTableVal();
-  c = val->AsTable()->InitForIteration();
-  while ((v = mvals->AsTable()->NextEntry(k, c))) {
-    ListValPtr index = mvals->AsTableVal()->RecreateIndex(*k);
-    std::string key = index->Idx(0)->AsString()->CheckString();
-    std::string val = v->GetVal()->AsString()->CheckString();
-    additional_message_values.insert(additional_message_values.begin(),
-                                     std::pair<std::string, std::string>(key, val));
-    delete k;
-  }
+  // kafka_conf and additional messages - thread local copy
+  ToStdMap(kafka_conf, BifConst::Kafka::kafka_conf->AsTableVal());
+  ToStdMap(additional_message_values, BifConst::Kafka::additional_message_values->AsTableVal());
 }
 
 KafkaWriter::~KafkaWriter() {
