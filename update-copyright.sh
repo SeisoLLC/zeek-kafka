@@ -44,7 +44,11 @@ if [[ "${MISSING_COPYRIGHT}" ]]; then
     REPLACEMENT="Copyright 2020-$(date +'%Y')"
     while IFS= read -r line; do
         echo "Updating $line ..."
-        sed -i '' "s/Copyright 2020-202[0-9]/$REPLACEMENT/" "${line}"
+        if [[ $OSTYPE == 'darwin'* ]]; then
+            sed -i "s/Copyright 2020-202[0-9]/$REPLACEMENT/" "${line}"
+        else
+            sed -i '' "s/Copyright 2020-202[0-9]/$REPLACEMENT/" "${line}"
+        fi
     done <<<"${MISSING_COPYRIGHT}"
     exit 1
 fi
