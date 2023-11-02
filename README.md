@@ -45,7 +45,7 @@ A Zeek log writer that sends logging output to Kafka, providing a convenient mea
 1. Install the plugin using `zkg install`.
 
     ```
-    $ zkg install seisollc/zeek-kafka --version 1.2.0
+    $ zkg install seisollc/zeek-kafka --version v1.2.0
     The following packages will be INSTALLED:
       zeek/seisollc/zeek-kafka (1.2.0)
 
