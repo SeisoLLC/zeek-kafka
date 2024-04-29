@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-#  Copyright 2020-2023 Zeek-Kafka
+#  Copyright 2020-2024 Zeek-Kafka
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -22,33 +22,33 @@ set -o pipefail
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 MISSING_COPYRIGHT=$(find "${DIR}" \( -path "${DIR}/.git" -or \
-    -path "${DIR}/.github" \) -prune -false -or \
-    \( -not -name ".*" \
-    -and -not -name "*.yml" \
-    -and -not -name "*.pcap" \
-    -and -not -name "*.pcapng" \
-    -and -not -name "COPYING" \
-    -and -not -name "Dockerfile" \
-    -and -not -name "Pipfile*" \
-    -and -not -name "output" \
-    -and -not -name "random.seed" \
-    -and -not -name "requirements*.txt" \
-    -and -not -name "setup.cfg" \
-    -and -not -name "zkg.meta" \
-    -type f \
-    \) \
-    -print0 |
-    xargs -0 grep --files-without-match "Copyright 2020-$(date +'%Y') Zeek-Kafka$" || true)
+	-path "${DIR}/.github" \) -prune -false -or \
+	\( -not -name ".*" \
+	-and -not -name "*.yml" \
+	-and -not -name "*.pcap" \
+	-and -not -name "*.pcapng" \
+	-and -not -name "COPYING" \
+	-and -not -name "Dockerfile" \
+	-and -not -name "Pipfile*" \
+	-and -not -name "output" \
+	-and -not -name "random.seed" \
+	-and -not -name "requirements*.txt" \
+	-and -not -name "setup.cfg" \
+	-and -not -name "zkg.meta" \
+	-type f \
+	\) \
+	-print0 |
+	xargs -0 grep --files-without-match "Copyright 2020-$(date +'%Y') Zeek-Kafka$" || true)
 
 if [[ "${MISSING_COPYRIGHT}" ]]; then
-    REPLACEMENT="Copyright 2020-$(date +'%Y')"
-    while IFS= read -r line; do
-        echo "Updating $line ..."
-        if [[ $OSTYPE == 'darwin'* ]]; then
-            sed -i "s/Copyright 2020-202[0-9]/$REPLACEMENT/" "${line}"
-        else
-            sed -i '' "s/Copyright 2020-202[0-9]/$REPLACEMENT/" "${line}"
-        fi
-    done <<<"${MISSING_COPYRIGHT}"
-    exit 1
+	REPLACEMENT="Copyright 2020-$(date +'%Y')"
+	while IFS= read -r line; do
+		echo "Updating $line ..."
+		if [[ $OSTYPE == 'darwin'* ]]; then
+			sed -i '' "s/Copyright 2020-202[0-9]/$REPLACEMENT/" "${line}"
+		else
+			sed -i "s/Copyright 2020-202[0-9]/$REPLACEMENT/" "${line}"
+		fi
+	done <<<"${MISSING_COPYRIGHT}"
+	exit 1
 fi
