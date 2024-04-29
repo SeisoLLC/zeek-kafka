@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-#  Copyright 2020-2023 Zeek-Kafka
+#  Copyright 2020-2024 Zeek-Kafka
 #  Copyright 2020 The Apache Software Foundation
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
