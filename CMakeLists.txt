@@ -1,5 +1,5 @@
 #
-#  Copyright 2020-2022 Zeek-Kafka
+#  Copyright 2020-2024 Zeek-Kafka
 #  Copyright 2015-2020 The Apache Software Foundation
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +15,7 @@
 #  limitations under the License.
 #
 
-cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 project(ZeekPlugin_Kafka)
 include(ZeekPlugin)
 find_package(LibRDKafka)

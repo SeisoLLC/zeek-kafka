@@ -1,5 +1,5 @@
 <!--
-  Copyright 2020-2022 Zeek-Kafka
+  Copyright 2020-2024 Zeek-Kafka
   Copyright 2015-2020 The Apache Software Foundation
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -45,13 +45,13 @@ A Zeek log writer that sends logging output to Kafka, providing a convenient mea
 1. Install the plugin using `zkg install`.
 
     ```
-    $ zkg install seisollc/zeek-kafka --version 1.1.0
+    $ zkg install seisollc/zeek-kafka --version v1.2.0
     The following packages will be INSTALLED:
-      zeek/seisollc/zeek-kafka (1.1.0)
+      zeek/seisollc/zeek-kafka (1.2.0)
 
     Verify the following REQUIRED external dependencies:
     (Ensure their installation on all relevant systems before proceeding):
-      from zeek/seisollc/zeek-kafka (1.1.0):
+      from zeek/seisollc/zeek-kafka (1.2.0):
         librdkafka ~1.4.2
 
     Proceed? [Y/n]
@@ -62,7 +62,7 @@ A Zeek log writer that sends logging output to Kafka, providing a convenient mea
 
 
     Installing "zeek/seisollc/zeek-kafka"........
-    Installed "zeek/seisollc/zeek-kafka" (1.1.0)
+    Installed "zeek/seisollc/zeek-kafka" (1.2.0)
     Loaded "zeek/seisollc/zeek-kafka"
     ```
 
@@ -70,7 +70,7 @@ A Zeek log writer that sends logging output to Kafka, providing a convenient mea
 
     ```
     $ zeek -N Seiso::Kafka
-    Seiso::Kafka - Writes logs to Kafka (dynamic, version 1.1.0)
+    Seiso::Kafka - Writes logs to Kafka (dynamic, version 1.2.0)
     ```
 
 ### Manual Installation
@@ -104,7 +104,7 @@ These instructions could also be helpful if you were interested in distributing 
 
     ```
     $ zeek -N Seiso::Kafka
-    Seiso::Kafka - Writes logs to Kafka (dynamic, version 1.1.0)
+    Seiso::Kafka - Writes logs to Kafka (dynamic, version 1.2.0)
     ```
 
 ## Activation
