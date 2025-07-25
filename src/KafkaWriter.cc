@@ -47,9 +47,7 @@ KafkaWriter::KafkaWriter(WriterFrontend *frontend)
   mocking = BifConst::Kafka::mock;
 
   // json_timestamps
-  ODesc tsfmt;
-  BifConst::Kafka::json_timestamps->Describe(&tsfmt);
-  json_timestamps.assign((const char *)tsfmt.Bytes(), tsfmt.Len());
+  json_timestamps = zeek::obj_desc_short(BifConst::Kafka::json_timestamps);
 
   // topic name - thread local copy
   topic_name.assign((const char *)BifConst::Kafka::topic_name->Bytes(),
