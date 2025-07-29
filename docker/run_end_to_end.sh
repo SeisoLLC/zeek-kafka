@@ -207,7 +207,7 @@ if [[ "$SKIP_REBUILD_ZEEK" = false ]]; then
     OUR_SCRIPTS_PATH=${OUR_SCRIPTS_PATH} \
     PLUGIN_ROOT_DIR=${PLUGIN_ROOT_DIR} \
     ZEEK_KAFKA_OS=${ZEEK_KAFKA_OS} \
-    docker-compose up -d --build
+    docker compose up -d --build
 else
   COMPOSE_PROJECT_NAME="${PROJECT_NAME}" \
     DATA_PATH=${DATA_PATH} \
@@ -215,7 +215,7 @@ else
     OUR_SCRIPTS_PATH=${OUR_SCRIPTS_PATH} \
     PLUGIN_ROOT_DIR=${PLUGIN_ROOT_DIR} \
     ZEEK_KAFKA_OS=${ZEEK_KAFKA_OS} \
-    docker-compose up -d
+    docker compose up -d
 fi
 
 # Create the kafka topic
@@ -277,4 +277,3 @@ echo ""
 echo "Run complete"
 echo "The kafka and zeek output can be found at ${TEST_OUTPUT_PATH}"
 echo "You may now work with the containers if you will.  You need to call finish_end_to_end.sh when you are done"
-
