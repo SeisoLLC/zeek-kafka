@@ -13,7 +13,7 @@ jobs:
   lint:
     strategy:
       matrix:
-        platform: [Ubuntu-20.04]
+        platform: [Ubuntu-24.04]
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v2
@@ -22,7 +22,7 @@ jobs:
   e2e:
     strategy:
       matrix:
-        platform: [Ubuntu-20.04]
+        platform: [Ubuntu-24.04]
         zeek-kafka-os: [ubuntu]
       fail-fast: false
     runs-on: ${{ matrix.platform }}

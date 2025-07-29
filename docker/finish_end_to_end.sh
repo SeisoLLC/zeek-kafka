@@ -70,5 +70,4 @@ fi
 # docker compose down
 COMPOSE_PROJECT_NAME="${PROJECT_NAME}" \
   ZEEK_KAFKA_OS="${ZEEK_KAFKA_OS}" \
-  docker-compose down
-
+  docker compose down
