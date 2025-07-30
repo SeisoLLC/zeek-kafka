@@ -1,0 +1,5 @@
+configparser
+gitdb
+GitPython
+semantic-version
+smmap
