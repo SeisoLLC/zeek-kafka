@@ -92,7 +92,7 @@ echo "PLUGIN_VERSION = ${PLUGIN_VERSION}"
 cd /root || exit 1
 
 echo "==================================================="
-git config --global --add safe.directory .
+git config --global --add safe.directory /root/code
 
 zkg -vvv test code --version "${PLUGIN_VERSION}"
 rc=$?
