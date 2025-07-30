@@ -93,16 +93,16 @@ cd /root || exit 1
 
 echo "==================================================="
 echo "=====(setting global)=============================="
-git config --global --add safe.directory /usr/local/zeek/var/lib/zkg/clones/source/zeek
-zkg -vvv test code --version "${PLUGIN_VERSION}"
-rc=$?
-if [[ ${rc} != 0 ]]; then
-	echo "ERROR running zkg test ${rc}"
-	printfiles
-	exit ${rc}
-fi
+#zkg -vvv test code --version "${PLUGIN_VERSION}"
+#rc=$?
+#if [[ ${rc} != 0 ]]; then
+#	echo "ERROR running zkg test ${rc}"
+#	printfiles
+#	exit ${rc}
+#fi
 
-zkg -vvv install code --skiptests --version "${PLUGIN_VERSION}" --force
+#zkg -vvv install code --skiptests --version "${PLUGIN_VERSION}" --force
+zkg -vvv install code --version "${PLUGIN_VERSION}" --force
 rc=$?
 if [[ ${rc} != 0 ]]; then
 	echo "ERROR running zkg install ${rc}"
