@@ -1,0 +1,73 @@
+#
+#  Copyright 2020-2025 Zeek-Kafka
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+FROM  zeek/zeek-dev:latest 
+
+ARG LIBRDKAFKA_VERSION
+
+# copy in the .screenrc
+COPY .screenrc /root
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get update \
+  && DEBIAN_FRONTEND=noninteractive apt-get -y install \
+  #  bc \
+  #  bison \
+  #  bsdmainutils \
+  #  cmake \
+  curl \
+  #  flex \
+  #  g++ \
+  #  gcc \
+  #  git \
+  #  jq \
+  #  lcov \
+  libcurl4-openssl-dev \
+  #  libkrb5-dev \
+  #  libmaxminddb-dev \
+  libpcap-dev \
+  libsasl2-dev \
+  libssl-dev \
+  libzstd-dev \
+  #  make \
+  #  python3 \
+  python3-dev \
+  python3-pip\
+  ruby \
+  #  screen \
+  #  sqlite3 \
+  #  swig \
+  #  tree \
+  #  unzip \
+  #  vim \
+  wget \
+  zlib1g-dev \
+  && rm -rf /var/lib/apt/lists/*
+
+RUN pip3 install junit2html --break-system-packages
+RUN gem install coveralls-lcov
+
+ENV PATH="${PATH}:/usr/bin"
+
+RUN apt-get -y install diffutils \
+  && apt-get clean all
+
+# install librdkafka
+WORKDIR /root
+RUN curl -L "https://github.com/confluentinc/librdkafka/archive/refs/tags/v${LIBRDKAFKA_VERSION}.tar.gz" | tar xzv
+WORKDIR "/root/librdkafka-${LIBRDKAFKA_VERSION}/"
+RUN ./configure --enable-sasl --install-deps \
+  && make -j $(nproc --all || echo 1) \
+  && make install \
+  && ldconfig

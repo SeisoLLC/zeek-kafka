@@ -27,64 +27,64 @@ set -o pipefail
 #
 
 function help {
-  echo " "
-  echo "usage: ${0}"
-  echo "    --container-name                [OPTIONAL] The Docker container name. Default: zeek-kafka_zeek_1"
-  echo "    --plugin-version                [REQUIRED] The plugin version."
-  echo "    -h/--help                       Usage information."
-  echo " "
-  echo " "
+	echo " "
+	echo "usage: ${0}"
+	echo "    --container-name                [OPTIONAL] The Docker container name. Default: zeek-kafka_zeek_1"
+	echo "    --plugin-version                [REQUIRED] The plugin version."
+	echo "    -h/--help                       Usage information."
+	echo " "
+	echo " "
 }
 
-CONTAINER_NAME="zeek-kafka_zeek_1"
+CONTAINER_NAME="zeek-kafka-zeek-1"
 PLUGIN_VERSION=
 
 # handle command line options
 for i in "$@"; do
-  case $i in
-  #
-  # CONTAINER_NAME
-  #
-  #   --container-name
-  #
-    --container-name=*)
-      CONTAINER_NAME="${i#*=}"
-      shift # past argument=value
-    ;;
+	case $i in
+	#
+	# CONTAINER_NAME
+	#
+	#   --container-name
+	#
+	--container-name=*)
+		CONTAINER_NAME="${i#*=}"
+		shift # past argument=value
+		;;
 
-  #
-  # PLUGIN_VERSION
-  #
-  #   --plugin-version
-  #
-    --plugin-version=*)
-      PLUGIN_VERSION="${i#*=}"
-      shift # past argument=value
-    ;;
+		#
+		# PLUGIN_VERSION
+		#
+		#   --plugin-version
+		#
+	--plugin-version=*)
+		PLUGIN_VERSION="${i#*=}"
+		shift # past argument=value
+		;;
 
-  #
-  # -h/--help
-  #
-    -h | --help)
-      help
-      exit 0
-      shift # past argument with no value
-    ;;
+		#
+		# -h/--help
+		#
+	-h | --help)
+		help
+		exit 0
+		shift # past argument with no value
+		;;
 
-  #
-  # Unknown option
-  #
-    *)
-      UNKNOWN_OPTION="${i#*=}"
-      echo "Error: unknown option: $UNKNOWN_OPTION"
-      help
-    ;;
-  esac
+		#
+		# Unknown option
+		#
+	*)
+		UNKNOWN_OPTION="${i#*=}"
+		echo "Error: unknown option: $UNKNOWN_OPTION"
+		help
+		;;
+	esac
 done
 
 if [[ -z "${PLUGIN_VERSION}" ]]; then
-  echo "PLUGIN_VERSION must be passed"
-  exit 1
+	echo "PLUGIN_VERSION must be passed"
+	exit 1
 fi
 
 echo "Running build_plugin with "
@@ -94,4 +94,3 @@ echo "==================================================="
 docker exec -w /root "${CONTAINER_NAME}" bash -c "/root/built_in_scripts/build_plugin.sh --plugin-version=${PLUGIN_VERSION}"
 
 echo "Built the plugin"
-

@@ -23,67 +23,67 @@ set -E # errtrap
 set -o pipefail
 
 function help {
-  echo " "
-  echo "usage: ${0}"
-  echo "    --container-name                [OPTIONAL] The Docker container name. Default: zeek-kafka_kafka-1_1"
-  echo "    --kafka-topic                   [OPTIONAL] The kafka topic to create. Default: zeek"
-  echo "    --partitions                    [OPTIONAL] The number of kafka partitions to create. Default: 2"
-  echo "    -h/--help                       Usage information."
-  echo " "
+	echo " "
+	echo "usage: ${0}"
+	echo "    --container-name                [OPTIONAL] The Docker container name. Default: zeek-kafka-kafka-1-1"
+	echo "    --kafka-topic                   [OPTIONAL] The kafka topic to create. Default: zeek"
+	echo "    --partitions                    [OPTIONAL] The number of kafka partitions to create. Default: 2"
+	echo "    -h/--help                       Usage information."
+	echo " "
 }
 
-CONTAINER_NAME="zeek-kafka_kafka-1_1"
+CONTAINER_NAME="zeek-kafka-kafka-1-1"
 KAFKA_TOPIC=zeek
 PARTITIONS=2
 
 # handle command line options
 for i in "$@"; do
-  case $i in
-  #
-  # CONTAINER_NAME
-  #
-  #   --container-name
-  #
-    --container-name=*)
-      CONTAINER_NAME="${i#*=}"
-      shift # past argument=value
-    ;;
-  #
-  # KAFKA_TOPIC
-  #
-  #   --kafka-topic
-  #
-    --kafka-topic=*)
-      KAFKA_TOPIC="${i#*=}"
-      shift # past argument=value
-    ;;
-  #
-  # PARTITIONS
-  #
-  #   --partitions
-  #
-    --partitions=*)
-      PARTITIONS="${i#*=}"
-      shift # past argument=value
-    ;;
-  #
-  # -h/--help
-  #
-    -h | --help)
-      help
-      exit 0
-      shift # past argument with no value
-    ;;
+	case $i in
+	#
+	# CONTAINER_NAME
+	#
+	#   --container-name
+	#
+	--container-name=*)
+		CONTAINER_NAME="${i#*=}"
+		shift # past argument=value
+		;;
+		#
+		# KAFKA_TOPIC
+		#
+		#   --kafka-topic
+		#
+	--kafka-topic=*)
+		KAFKA_TOPIC="${i#*=}"
+		shift # past argument=value
+		;;
+		#
+		# PARTITIONS
+		#
+		#   --partitions
+		#
+	--partitions=*)
+		PARTITIONS="${i#*=}"
+		shift # past argument=value
+		;;
+		#
+		# -h/--help
+		#
+	-h | --help)
+		help
+		exit 0
+		shift # past argument with no value
+		;;
 
-  #
-  # Unknown option
-  #
-    *)
-      UNKNOWN_OPTION="${i#*=}"
-      echo "Error: unknown option: $UNKNOWN_OPTION"
-      help
-    ;;
-  esac
+		#
+		# Unknown option
+		#
+	*)
+		UNKNOWN_OPTION="${i#*=}"
+		echo "Error: unknown option: $UNKNOWN_OPTION"
+		help
+		;;
+	esac
 done
 
 echo "Running docker_execute_create_topic_in_kafka.sh with "
@@ -93,5 +93,4 @@ echo "PARTITIONS = ${PARTITIONS}"
 echo "==================================================="
 
 docker exec -w /opt/kafka/bin/ "${CONTAINER_NAME}" \
-  bash -c "JMX_PORT= ./kafka-topics.sh --create --topic ${KAFKA_TOPIC} --replication-factor 1 --partitions ${PARTITIONS} --zookeeper zookeeper:2181"
-
+	bash -c "JMX_PORT= ./kafka-topics.sh --create --topic ${KAFKA_TOPIC} --replication-factor 1 --partitions ${PARTITIONS} --zookeeper zookeeper:2181"

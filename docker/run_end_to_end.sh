@@ -22,34 +22,34 @@ set -E # errtrap
 set -o pipefail
 
 function help {
-  echo " "
-  echo "USAGE"
-  echo "    --data-path                     [OPTIONAL] The pcap data path. Default: ./data"
-  echo "    --kafka-topic                   [OPTIONAL] The kafka topic to consume from. Default: zeek"
-  echo "    --no-pcap                       [OPTIONAL] Do not run pcaps."
-  echo "    --partitions                    [OPTIONAL] The number of kafka partitions to create. Default: 2"
-  echo "    --plugin-version                [OPTIONAL] The plugin version. Default: the current branch name"
-  echo "    --skip-docker-build             [OPTIONAL] Skip build of zeek docker machine."
-  echo "    --test-output                   [OPTIONAL] The test output path. Default: ./test_output/DATETIME"
-  echo "    --zeek-kafka-os                 [OPTIONAL] The OS to run zeek and zeek-kafka in. Default: ubuntu"
-  echo "    -h/--help                       Usage information."
-  echo " "
-  echo "COMPATABILITY"
-  echo "     bash >= 4.0 is required."
-  echo " "
+	echo " "
+	echo "USAGE"
+	echo "    --data-path                     [OPTIONAL] The pcap data path. Default: ./data"
+	echo "    --kafka-topic                   [OPTIONAL] The kafka topic to consume from. Default: zeek"
+	echo "    --no-pcap                       [OPTIONAL] Do not run pcaps."
+	echo "    --partitions                    [OPTIONAL] The number of kafka partitions to create. Default: 2"
+	echo "    --plugin-version                [OPTIONAL] The plugin version. Default: the current branch name"
+	echo "    --skip-docker-build             [OPTIONAL] Skip build of zeek docker machine."
+	echo "    --test-output                   [OPTIONAL] The test output path. Default: ./test_output/DATETIME"
+	echo "    --zeek-kafka-os                 [OPTIONAL] The OS to run zeek and zeek-kafka in. Default: ubuntu"
+	echo "    -h/--help                       Usage information."
+	echo " "
+	echo "COMPATABILITY"
+	echo "     bash >= 4.0 is required."
+	echo " "
 }
 
 # Require bash >= 4
-if (( BASH_VERSINFO[0] < 4 )); then
-  >&2 echo "ERROR> bash >= 4.0 is required" >&2
-  help
-  exit 1
+if ((BASH_VERSINFO[0] < 4)); then
+	>&2 echo "ERROR> bash >= 4.0 is required" >&2
+	help
+	exit 1
 fi
 
 SKIP_REBUILD_ZEEK=false
 NO_PCAP=false
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" > /dev/null && pwd)"
-PLUGIN_ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd .. > /dev/null && pwd)"
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
+PLUGIN_ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd .. >/dev/null && pwd)"
 SCRIPT_DIR="${ROOT_DIR}"/scripts
 DATA_PATH="${ROOT_DIR}"/data
 DATE=$(date)
@@ -60,30 +60,36 @@ PARTITIONS=2
 ZEEK_KAFKA_OS="ubuntu"
 PROJECT_NAME="zeek-kafka"
 OUR_SCRIPTS_PATH="${PLUGIN_ROOT_DIR}/docker/in_docker_scripts"
-
-cd "${PLUGIN_ROOT_DIR}" || { echo "NO PLUGIN ROOT" ; exit 1; }
+cd "${PLUGIN_ROOT_DIR}" || {
+	echo "NO PLUGIN ROOT"
+	exit 1
+}
 # we may not be checked out from git, check and make it so that we are since
 # zkg requires it
 
 git status &>/dev/null
-rc=$?; if [[ ${rc} != 0 ]]; then
-  echo "zkg requires the plugin to be a git repo, creating..."
-  git init .
-  rc=$?; if [[ ${rc} != 0 ]]; then
-    echo "ERROR> FAILED TO INITIALIZE GIT IN PLUGIN DIRECTORY. ${rc}"
-  exit ${rc}
-  fi
-  git add .
-  rc=$?; if [[ ${rc} != 0 ]]; then
-    echo "ERROR> FAILED TO ADD ALL TO GIT PLUGIN DIRECTORY. ${rc}"
-  exit ${rc}
-  fi
-  git commit -m 'docker run'
-  rc=$?; if [[ ${rc} != 0 ]]; then
-    echo "ERROR> FAILED TO COMMIT TO GIT IN PLUGIN DIRECTORY. ${rc}"
-  exit ${rc}
-  fi
-  echo "git repo created"
+rc=$?
+if [[ ${rc} != 0 ]]; then
+	echo "zkg requires the plugin to be a git repo, creating..."
+	git init .
+	rc=$?
+	if [[ ${rc} != 0 ]]; then
+		echo "ERROR> FAILED TO INITIALIZE GIT IN PLUGIN DIRECTORY. ${rc}"
+		exit ${rc}
+	fi
+	git add .
+	rc=$?
+	if [[ ${rc} != 0 ]]; then
+		echo "ERROR> FAILED TO ADD ALL TO GIT PLUGIN DIRECTORY. ${rc}"
+		exit ${rc}
+	fi
+	git commit -m 'docker run'
+	rc=$?
+	if [[ ${rc} != 0 ]]; then
+		echo "ERROR> FAILED TO COMMIT TO GIT IN PLUGIN DIRECTORY. ${rc}"
+		exit ${rc}
+	fi
+	echo "git repo created"
 fi
 
 # set errexit for the rest of the run
@@ -94,91 +100,94 @@ PLUGIN_VERSION=$(git rev-parse --verify HEAD)
 
 # Handle command line options
 for i in "$@"; do
-  case $i in
-  #
-  # SKIP_REBUILD_ZEEK
-  #
-  #   --skip-docker-build
-  #
-    --skip-docker-build)
-      SKIP_REBUILD_ZEEK=true
-      shift # past argument
-    ;;
-  #
-  # NO_PCAP
-  #
-  #   --no-pcap
-  #
-    --no-pcap)
-      NO_PCAP=true
-      shift # past argument
-    ;;
-  #
-  # DATA_PATH
-  #
-  #   --data-path
-  #
-    --data-path=*)
-      DATA_PATH="${i#*=}"
-      shift # past argument=value
-    ;;
-  #
-  # TEST_OUTPUT_PATH
-  #
-  #   --test-output
-  #
-    --test-output=*)
-      TEST_OUTPUT_PATH="${i#*=}"
-      shift # past argument=value
-    ;;
-  #
-  # KAFKA_TOPIC
-  #
-  #   --kafka-topic
-  #
-    --kafka-topic=*)
-      KAFKA_TOPIC="${i#*=}"
-      shift # past argument=value
-    ;;
-  #
-  # PARTITIONS
-  #
-  #   --partitions
-  #
-    --partitions=*)
-      PARTITIONS="${i#*=}"
-      shift # past argument=value
-    ;;
-  #
-  # PLUGIN_VERSION
-  #
-  #   --plugin-version
-  #
-    --plugin-version=*)
-      PLUGIN_VERSION="${i#*=}"
-      shift # past argument=value
-    ;;
-  #
-  # ZEEK_KAFKA_OS
-  #
-  #   --zeek-kafka-os
-  #
-    --zeek-kafka-os=*)
-      ZEEK_KAFKA_OS="${i#*=}"
-      shift # past argument=value
-    ;;
-  #
-  # -h/--help
-  #
-    -h | --help)
-      help
-      exit 0
-      shift # past argument with no value
-    ;;
-  esac
+	case $i in
+	#
+	# SKIP_REBUILD_ZEEK
+	#
+	#   --skip-docker-build
+	#
+	--skip-docker-build)
+		SKIP_REBUILD_ZEEK=true
+		shift # past argument
+		;;
+		#
+		# NO_PCAP
+		#
+		#   --no-pcap
+		#
+	--no-pcap)
+		NO_PCAP=true
+		shift # past argument
+		;;
+		#
+		# DATA_PATH
+		#
+		#   --data-path
+		#
+	--data-path=*)
+		DATA_PATH="${i#*=}"
+		shift # past argument=value
+		;;
+		#
+		# TEST_OUTPUT_PATH
+		#
+		#   --test-output
+		#
+	--test-output=*)
+		TEST_OUTPUT_PATH="${i#*=}"
+		shift # past argument=value
+		;;
+		#
+		# KAFKA_TOPIC
+		#
+		#   --kafka-topic
+		#
+	--kafka-topic=*)
+		KAFKA_TOPIC="${i#*=}"
+		shift # past argument=value
+		;;
+		#
+		# PARTITIONS
+		#
+		#   --partitions
+		#
+	--partitions=*)
+		PARTITIONS="${i#*=}"
+		shift # past argument=value
+		;;
+		#
+		# PLUGIN_VERSION
+		#
+		#   --plugin-version
+		#
+	--plugin-version=*)
+		PLUGIN_VERSION="${i#*=}"
+		shift # past argument=value
+		;;
+		#
+		# ZEEK_KAFKA_OS
+		#
+		#   --zeek-kafka-os
+		#
+	--zeek-kafka-os=*)
+		ZEEK_KAFKA_OS="${i#*=}"
+		shift # past argument=value
+		;;
+		#
+		# -h/--help
+		#
+	-h | --help)
+		help
+		exit 0
+		shift # past argument with no value
+		;;
+	esac
 done
 
-cd "${ROOT_DIR}" || { echo "ROOT_DIR unavailable" ; exit 1; }
+cd "${ROOT_DIR}" || {
+	echo "ROOT_DIR unavailable"
+	exit 1
+}
 echo "Running the end to end tests with"
 echo "COMPOSE_PROJECT_NAME = ${PROJECT_NAME}"
 echo "SKIP_REBUILD_ZEEK    = ${SKIP_REBUILD_ZEEK}"
@@ -193,29 +202,29 @@ echo "ZEEK_KAFKA_OS        = ${ZEEK_KAFKA_OS}"
 echo "==================================================="
 
 if [[ "${ZEEK_KAFKA_OS}" == "ubuntu" ]]; then
-  ZEEK_KAFKA_OS="ubuntu:20.04"
+	ZEEK_KAFKA_OS="ubuntu:20.04"
 else
-  echo "OS must be ubuntu"
-  exit 1
+	echo "OS must be ubuntu"
+	exit 1
 fi
 
 # Run docker compose, rebuilding as specified
 if [[ "$SKIP_REBUILD_ZEEK" = false ]]; then
-  COMPOSE_PROJECT_NAME="${PROJECT_NAME}" \
-    DATA_PATH=${DATA_PATH} \
-    TEST_OUTPUT_PATH=${TEST_OUTPUT_PATH} \
-    OUR_SCRIPTS_PATH=${OUR_SCRIPTS_PATH} \
-    PLUGIN_ROOT_DIR=${PLUGIN_ROOT_DIR} \
-    ZEEK_KAFKA_OS=${ZEEK_KAFKA_OS} \
-    docker compose up -d --build
+	COMPOSE_PROJECT_NAME="${PROJECT_NAME}" \
+		DATA_PATH=${DATA_PATH} \
+		TEST_OUTPUT_PATH=${TEST_OUTPUT_PATH} \
+		OUR_SCRIPTS_PATH=${OUR_SCRIPTS_PATH} \
+		PLUGIN_ROOT_DIR=${PLUGIN_ROOT_DIR} \
+		ZEEK_KAFKA_OS=${ZEEK_KAFKA_OS} \
+		docker compose up -d --build
 else
-  COMPOSE_PROJECT_NAME="${PROJECT_NAME}" \
-    DATA_PATH=${DATA_PATH} \
-    TEST_OUTPUT_PATH=${TEST_OUTPUT_PATH} \
-    OUR_SCRIPTS_PATH=${OUR_SCRIPTS_PATH} \
-    PLUGIN_ROOT_DIR=${PLUGIN_ROOT_DIR} \
-    ZEEK_KAFKA_OS=${ZEEK_KAFKA_OS} \
-    docker compose up -d
+	COMPOSE_PROJECT_NAME="${PROJECT_NAME}" \
+		DATA_PATH=${DATA_PATH} \
+		TEST_OUTPUT_PATH=${TEST_OUTPUT_PATH} \
+		OUR_SCRIPTS_PATH=${OUR_SCRIPTS_PATH} \
+		PLUGIN_ROOT_DIR=${PLUGIN_ROOT_DIR} \
+		ZEEK_KAFKA_OS=${ZEEK_KAFKA_OS} \
+		docker compose up -d
 fi
 
 # Create the kafka topic
@@ -231,46 +240,45 @@ fi
 "${SCRIPT_DIR}"/docker_execute_configure_plugin.sh --kafka-topic="${KAFKA_TOPIC}"
 
 if [[ "$NO_PCAP" == false ]]; then
-  # for each pcap in the data directory, we want to
-  # run zeek then read the output from kafka
-  # and output both of them to the same directory named
-  # for the date/pcap
-  for file in "${DATA_PATH}"/**/*.pcap*
-  do
-    # get the file name
-    BASE_FILE_NAME=$(basename "${file}")
-    DOCKER_DIRECTORY_NAME=${BASE_FILE_NAME//\./_}
+	# for each pcap in the data directory, we want to
+	# run zeek then read the output from kafka
+	# and output both of them to the same directory named
+	# for the date/pcap
+	for file in "${DATA_PATH}"/**/*.pcap*; do
+		# get the file name
+		BASE_FILE_NAME=$(basename "${file}")
+		DOCKER_DIRECTORY_NAME=${BASE_FILE_NAME//\./_}
 
-    mkdir "${TEST_OUTPUT_PATH}/${DOCKER_DIRECTORY_NAME}" || exit 1
-    echo "MADE ${TEST_OUTPUT_PATH}/${DOCKER_DIRECTORY_NAME}"
+		mkdir "${TEST_OUTPUT_PATH}/${DOCKER_DIRECTORY_NAME}" || exit 1
+		echo "MADE ${TEST_OUTPUT_PATH}/${DOCKER_DIRECTORY_NAME}"
 
-    # get the offsets in kafka for the provided topic
-    # this is where we are going to _start_, and must happen
-    # before processing the pcap
-    OFFSETS=$("${SCRIPT_DIR}"/docker_run_get_offset_kafka.sh --kafka-topic="${KAFKA_TOPIC}")
+		# get the offsets in kafka for the provided topic
+		# this is where we are going to _start_, and must happen
+		# before processing the pcap
+		OFFSETS=$("${SCRIPT_DIR}"/docker_run_get_offset_kafka.sh --kafka-topic="${KAFKA_TOPIC}")
 
-    "${SCRIPT_DIR}"/docker_execute_process_data_file.sh --pcap-file-name="${BASE_FILE_NAME}" --output-directory-name="${DOCKER_DIRECTORY_NAME}"
+		"${SCRIPT_DIR}"/docker_execute_process_data_file.sh --pcap-file-name="${BASE_FILE_NAME}" --output-directory-name="${DOCKER_DIRECTORY_NAME}"
 
-    # loop through each partition
-    while IFS= read -r line; do
-      # shellcheck disable=SC2001
-      OFFSET=$(echo "${line}" | sed "s/^${KAFKA_TOPIC}:.*:\(.*\)$/\1/")
-      # shellcheck disable=SC2001
-      PARTITION=$(echo "${line}" | sed "s/^${KAFKA_TOPIC}:\(.*\):.*$/\1/")
+		# loop through each partition
+		while IFS= read -r line; do
+			# shellcheck disable=SC2001
+			OFFSET=$(echo "${line}" | sed "s/^${KAFKA_TOPIC}:.*:\(.*\)$/\1/")
+			# shellcheck disable=SC2001
+			PARTITION=$(echo "${line}" | sed "s/^${KAFKA_TOPIC}:\(.*\):.*$/\1/")
 
-      echo "PARTITION---------------> ${PARTITION}"
-      echo "OFFSET------------------> ${OFFSET}"
+			echo "PARTITION---------------> ${PARTITION}"
+			echo "OFFSET------------------> ${OFFSET}"
 
-      KAFKA_OUTPUT_FILE="${TEST_OUTPUT_PATH}/${DOCKER_DIRECTORY_NAME}/kafka-output.log"
-      "${SCRIPT_DIR}"/docker_run_consume_kafka.sh --offset="${OFFSET}" --partition="${PARTITION}" --kafka-topic="${KAFKA_TOPIC}" 1>>"${KAFKA_OUTPUT_FILE}" 2>/dev/null
-    done <<< "${OFFSETS}"
+			KAFKA_OUTPUT_FILE="${TEST_OUTPUT_PATH}/${DOCKER_DIRECTORY_NAME}/kafka-output.log"
+			"${SCRIPT_DIR}"/docker_run_consume_kafka.sh --offset="${OFFSET}" --partition="${PARTITION}" --kafka-topic="${KAFKA_TOPIC}" 1>>"${KAFKA_OUTPUT_FILE}" 2>/dev/null
+		done <<<"${OFFSETS}"
 
-    "${SCRIPT_DIR}"/split_kafka_output_by_log.sh --log-directory="${TEST_OUTPUT_PATH}/${DOCKER_DIRECTORY_NAME}"
-  done
+		"${SCRIPT_DIR}"/split_kafka_output_by_log.sh --log-directory="${TEST_OUTPUT_PATH}/${DOCKER_DIRECTORY_NAME}"
+	done
 
-  "${SCRIPT_DIR}"/print_results.sh --test-directory="${TEST_OUTPUT_PATH}"
+	"${SCRIPT_DIR}"/print_results.sh --test-directory="${TEST_OUTPUT_PATH}"
 
-  "${SCRIPT_DIR}"/analyze_results.sh --test-directory="${TEST_OUTPUT_PATH}"
+	"${SCRIPT_DIR}"/analyze_results.sh --test-directory="${TEST_OUTPUT_PATH}"
 fi
 
 echo ""
