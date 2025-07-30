@@ -29,62 +29,62 @@ set -o pipefail
 #
 
 function help {
-  echo " "
-  echo "usage: ${0}"
-  echo "    --plugin-version                [REQUIRED] The plugin version."
-  echo "    -h/--help                       Usage information."
-  echo " "
-  echo " "
+	echo " "
+	echo "usage: ${0}"
+	echo "    --plugin-version                [REQUIRED] The plugin version."
+	echo "    -h/--help                       Usage information."
+	echo " "
+	echo " "
 }
 
 function printfiles {
-  echo "==================================================="
-  echo "Output"
-  cat /root/.zkg/testing/zeek-kafka/clones/zeek-kafka
-  echo "==================================================="
-  echo ""
-  echo "==================================================="
-  echo ""
+	echo "==================================================="
+	echo "Output"
+	cat /root/.zkg/testing/zeek-kafka/clones/zeek-kafka
+	echo "==================================================="
+	echo ""
+	echo "==================================================="
+	echo ""
 }
 
 PLUGIN_VERSION=
 
 # Handle command line options
 for i in "$@"; do
-  case $i in
-  #
-  # PLUGIN_VERSION
-  #
-  #   --plugin-version
-  #
-    --plugin-version=*)
-      PLUGIN_VERSION="${i#*=}"
-      shift # past argument=value
-    ;;
+	case $i in
+	#
+	# PLUGIN_VERSION
+	#
+	#   --plugin-version
+	#
+	--plugin-version=*)
+		PLUGIN_VERSION="${i#*=}"
+		shift # past argument=value
+		;;
 
-  #
-  # -h/--help
-  #
-    -h | --help)
-      help
-      exit 0
-      shift # past argument with no value
-    ;;
+		#
+		# -h/--help
+		#
+	-h | --help)
+		help
+		exit 0
+		shift # past argument with no value
+		;;
 
-  #
-  # Unknown option
-  #
-    *)
-      UNKNOWN_OPTION="${i#*=}"
-      echo "Error: unknown option: $UNKNOWN_OPTION"
-      help
-    ;;
-  esac
+		#
+		# Unknown option
+		#
+	*)
+		UNKNOWN_OPTION="${i#*=}"
+		echo "Error: unknown option: $UNKNOWN_OPTION"
+		help
+		;;
+	esac
 done
 
 if [[ -z "${PLUGIN_VERSION}" ]]; then
-  echo "PLUGIN_VERSION must be passed"
-  exit 1
+	echo "PLUGIN_VERSION must be passed"
+	exit 1
 fi
 
 echo "PLUGIN_VERSION = ${PLUGIN_VERSION}"
@@ -92,23 +92,24 @@ echo "PLUGIN_VERSION = ${PLUGIN_VERSION}"
 cd /root || exit 1
 
 echo "==================================================="
-
+git config --global --add safe.directory /usr/local/zeek/var/lib/zkg/clones/source/zeek
 zkg -vvv test code --version "${PLUGIN_VERSION}"
-rc=$?; if [[ ${rc} != 0 ]]; then
-  echo "ERROR running zkg test ${rc}"
-  printfiles
-  exit ${rc}
+rc=$?
+if [[ ${rc} != 0 ]]; then
+	echo "ERROR running zkg test ${rc}"
+	printfiles
+	exit ${rc}
 fi
 
 zkg -vvv install code --skiptests --version "${PLUGIN_VERSION}" --force
-rc=$?; if [[ ${rc} != 0 ]]; then
-  echo "ERROR running zkg install ${rc}"
-  printfiles
-  exit ${rc}
+rc=$?
+if [[ ${rc} != 0 ]]; then
+	echo "ERROR running zkg install ${rc}"
+	printfiles
+	exit ${rc}
 fi
 
 zeek -NN Seiso::Kafka
 
 echo "==================================================="
 echo ""
-
