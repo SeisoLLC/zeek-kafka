@@ -27,47 +27,47 @@ set -o pipefail
 #
 
 function help {
-  echo " "
-  echo "usage: ${0}"
-  echo "    --container-name                [OPTIONAL] The Docker container name. Default: zeek-kafka_zeek_1"
-  echo "    -h/--help                       Usage information."
-  echo " "
-  echo " "
+	echo " "
+	echo "usage: ${0}"
+	echo "    --container-name                [OPTIONAL] The Docker container name. Default: zeek-kafka_zeek_1"
+	echo "    -h/--help                       Usage information."
+	echo " "
+	echo " "
 }
 
-CONTAINER_NAME=zeek-kafka_zeek_1
+CONTAINER_NAME=zeek-kafka-zeek-1
 
 # handle command line options
 for i in "$@"; do
-  case $i in
-  #
-  # CONTAINER_NAME
-  #
-  #   --container-name
-  #
-    --container-name=*)
-      CONTAINER_NAME="${i#*=}"
-      shift # past argument=value
-    ;;
+	case $i in
+	#
+	# CONTAINER_NAME
+	#
+	#   --container-name
+	#
+	--container-name=*)
+		CONTAINER_NAME="${i#*=}"
+		shift # past argument=value
+		;;
 
-  #
-  # -h/--help
-  #
-    -h | --help)
-      help
-      exit 0
-      shift # past argument with no value
-    ;;
+		#
+		# -h/--help
+		#
+	-h | --help)
+		help
+		exit 0
+		shift # past argument with no value
+		;;
 
-  #
-  # Unknown option
-  #
-    *)
-      UNKNOWN_OPTION="${i#*=}"
-      echo "Error: unknown option: $UNKNOWN_OPTION"
-      help
-    ;;
-  esac
+		#
+		# Unknown option
+		#
+	*)
+		UNKNOWN_OPTION="${i#*=}"
+		echo "Error: unknown option: $UNKNOWN_OPTION"
+		help
+		;;
+	esac
 done
 
 echo "Running bash on "
@@ -75,4 +75,3 @@ echo "CONTAINER_NAME = $CONTAINER_NAME"
 echo "==================================================="
 
 docker exec -i -t "${CONTAINER_NAME}" bash
-

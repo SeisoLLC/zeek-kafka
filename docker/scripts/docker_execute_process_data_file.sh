@@ -27,71 +27,71 @@ set -o pipefail
 #
 
 function help {
-  echo " "
-  echo "usage: ${0}"
-  echo "    --container-name                [OPTIONAL] The Docker container name. Default: zeek-kafka_zeek_1"
-  echo "    --pcap-file-name                [REQUIRED] The name of the pcap file"
-  echo "    --output-directory-name         [REQUIRED] The name of the output directory"
-  echo "    -h/--help                       Usage information."
-  echo " "
-  echo " "
+	echo " "
+	echo "usage: ${0}"
+	echo "    --container-name                [OPTIONAL] The Docker container name. Default: zeek-kafka_zeek_1"
+	echo "    --pcap-file-name                [REQUIRED] The name of the pcap file"
+	echo "    --output-directory-name         [REQUIRED] The name of the output directory"
+	echo "    -h/--help                       Usage information."
+	echo " "
+	echo " "
 }
 
-CONTAINER_NAME=zeek-kafka_zeek_1
+CONTAINER_NAME=zeek-kafka-zeek-1
 PCAP_FILE_NAME=
 OUTPUT_DIRECTORY_NAME=
 
 # Handle command line options
 for i in "$@"; do
-  case $i in
-  #
-  # CONTAINER_NAME
-  #
-  #   --container-name
-  #
-    --container-name=*)
-      CONTAINER_NAME="${i#*=}"
-      shift # past argument=value
-    ;;
+	case $i in
+	#
+	# CONTAINER_NAME
+	#
+	#   --container-name
+	#
+	--container-name=*)
+		CONTAINER_NAME="${i#*=}"
+		shift # past argument=value
+		;;
 
-  #
-  # PCAP_FILE_NAME
-  #
-  #   --pcap-file-name
-  #
-    --pcap-file-name=*)
-      PCAP_FILE_NAME="${i#*=}"
-      shift # past argument=value
-    ;;
+		#
+		# PCAP_FILE_NAME
+		#
+		#   --pcap-file-name
+		#
+	--pcap-file-name=*)
+		PCAP_FILE_NAME="${i#*=}"
+		shift # past argument=value
+		;;
 
-  #
-  # OUTPUT_DIRECTORY_NAME
-  #
-  #   --output-directory-name
-  #
-    --output-directory-name=*)
-      OUTPUT_DIRECTORY_NAME="${i#*=}"
-      shift # past argument=value
-    ;;
+		#
+		# OUTPUT_DIRECTORY_NAME
+		#
+		#   --output-directory-name
+		#
+	--output-directory-name=*)
+		OUTPUT_DIRECTORY_NAME="${i#*=}"
+		shift # past argument=value
+		;;
 
-  #
-  # -h/--help
-  #
-    -h | --help)
-      help
-      exit 0
-      shift # past argument with no value
-    ;;
+		#
+		# -h/--help
+		#
+	-h | --help)
+		help
+		exit 0
+		shift # past argument with no value
+		;;
 
-  #
-  # Unknown option
-  #
-    *)
-      UNKNOWN_OPTION="${i#*=}"
-      echo "Error: unknown option: $UNKNOWN_OPTION"
-      help
-    ;;
-  esac
+		#
+		# Unknown option
+		#
+	*)
+		UNKNOWN_OPTION="${i#*=}"
+		echo "Error: unknown option: $UNKNOWN_OPTION"
+		help
+		;;
+	esac
 done
 
 echo "Running docker_execute_process_data_dir with "
@@ -106,4 +106,3 @@ echo " "
 docker exec -w /root "${CONTAINER_NAME}" bash -c "built_in_scripts/process_data_file.sh --pcap-file-name=${PCAP_FILE_NAME} --output-directory-name=${OUTPUT_DIRECTORY_NAME}"
 
 echo "done processing ${PCAP_FILE_NAME}"
-

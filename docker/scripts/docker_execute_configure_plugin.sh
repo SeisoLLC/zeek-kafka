@@ -27,56 +27,56 @@ set -o pipefail
 #
 
 function help {
-  echo " "
-  echo "usage: ${0}"
-  echo "    --container-name                [OPTIONAL] The Docker container name. Default: zeek-kafka_zeek_1"
-  echo "    --kafka-topic                   [OPTIONAL] The kafka topic to create. Default: zeek"
-  echo "    -h/--help                       Usage information."
-  echo " "
-  echo " "
+	echo " "
+	echo "usage: ${0}"
+	echo "    --container-name                [OPTIONAL] The Docker container name. Default: zeek-kafka_zeek_1"
+	echo "    --kafka-topic                   [OPTIONAL] The kafka topic to create. Default: zeek"
+	echo "    -h/--help                       Usage information."
+	echo " "
+	echo " "
 }
 
-CONTAINER_NAME=zeek-kafka_zeek_1
+CONTAINER_NAME=zeek-kafka-zeek-1
 KAFKA_TOPIC=zeek
 
 # Handle command line options
 for i in "$@"; do
-  case $i in
-  #
-  # CONTAINER_NAME
-  #
-  #   --container-name
-  #
-    --container-name=*)
-      CONTAINER_NAME="${i#*=}"
-      shift # past argument=value
-    ;;
-  #
-  # KAFKA_TOPIC
-  #
-  #   --kafka-topic
-  #
-    --kafka-topic=*)
-      KAFKA_TOPIC="${i#*=}"
-      shift # past argument=value
-    ;;
-  #
-  # -h/--help
-  #
-    -h | --help)
-      help
-      exit 0
-      shift # past argument with no value
-    ;;
-  #
-  # Unknown option
-  #
-    *)
-      UNKNOWN_OPTION="${i#*=}"
-      echo "Error: unknown option: $UNKNOWN_OPTION"
-      help
-    ;;
-  esac
+	case $i in
+	#
+	# CONTAINER_NAME
+	#
+	#   --container-name
+	#
+	--container-name=*)
+		CONTAINER_NAME="${i#*=}"
+		shift # past argument=value
+		;;
+		#
+		# KAFKA_TOPIC
+		#
+		#   --kafka-topic
+		#
+	--kafka-topic=*)
+		KAFKA_TOPIC="${i#*=}"
+		shift # past argument=value
+		;;
+		#
+		# -h/--help
+		#
+	-h | --help)
+		help
+		exit 0
+		shift # past argument with no value
+		;;
+		#
+		# Unknown option
+		#
+	*)
+		UNKNOWN_OPTION="${i#*=}"
+		echo "Error: unknown option: $UNKNOWN_OPTION"
+		help
+		;;
+	esac
 done
 
 echo "Running docker_execute_configure_plugin.sh with "
@@ -87,4 +87,3 @@ echo "==================================================="
 docker exec -w /root "${CONTAINER_NAME}" bash -c "/root/built_in_scripts/configure_plugin.sh --kafka-topic=\"${KAFKA_TOPIC}\""
 
 echo "configured the kafka plugin"
-
