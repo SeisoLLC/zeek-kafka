@@ -92,6 +92,7 @@ echo "PLUGIN_VERSION = ${PLUGIN_VERSION}"
 cd /root || exit 1
 
 echo "==================================================="
+echo "=====(setting global)=============================="
 git config --global --add safe.directory /usr/local/zeek/var/lib/zkg/clones/source/zeek
 zkg -vvv test code --version "${PLUGIN_VERSION}"
 rc=$?
