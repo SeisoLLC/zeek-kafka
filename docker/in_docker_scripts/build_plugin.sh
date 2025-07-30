@@ -93,6 +93,7 @@ cd /root || exit 1
 
 echo "==================================================="
 git config --global --add safe.directory /root/code/.git
+git config --global --add safe.directory /usr/local/zeek/var/lib/zkg/clones/source/zeek
 
 zkg -vvv test code --version "${PLUGIN_VERSION}"
 rc=$?
