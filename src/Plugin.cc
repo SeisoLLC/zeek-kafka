@@ -31,7 +31,8 @@ zeek::plugin::Configuration Plugin::Configure()
     zeek::plugin::Configuration config;
     config.name = "Seiso::Kafka";
     config.description = "Writes logs to Kafka";
-    config.version.major = 0;
-    config.version.minor = 3;
+    config.version.major = 1;
+    config.version.minor = 2;
+    config.version.patch = 0;
     return config;
 }
